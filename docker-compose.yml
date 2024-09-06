@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build: backend/Dockerfile
+    ports:
+      - "3000:3000/tcp"
+    depends_on:
+      - mysqldb
+
+
+  mysqldb:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  
+volumes:
+  db_data:
