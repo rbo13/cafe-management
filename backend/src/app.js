@@ -2,11 +2,20 @@ import express from 'express'
 import 'express-async-errors'
 import logger from 'loglevel'
 import { v1Routes } from './routes'
+import { createDatabaseConnection } from './database'
 
-function startApp({port = process.env.PORT} = {}) {
+const DB_CONFIG = {
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_NAME || 'cafe'
+}
+
+async function startApp({port = process.env.PORT} = {}) {
   const app = express()
+  const db = await createDatabaseConnection(DB_CONFIG)
 
-  app.use('/api/v1', v1Routes())
+  app.use('/api/v1', v1Routes(db))
 
   app.use(errorMiddleware)
 

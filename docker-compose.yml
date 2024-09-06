@@ -8,13 +8,12 @@ services:
     depends_on:
       - mysqldb
 
-
   mysqldb:
     image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: password
+      MYSQL_DATABASE: cafe
     ports:
       - "3306:3306"
     volumes:
