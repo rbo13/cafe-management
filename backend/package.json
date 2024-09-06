@@ -3,18 +3,30 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.20.4"
   },
   "scripts": {
-    "test": "",
-    "migrate": "db-migrate"
+    "start": "node .",
+    "build": "babel --delete-dir-on-start --out-dir dist --copy-files --ignore \"**/__tests__/**,**/__mocks__/**\" --no-copy-ignored src",
+    "migrate": "db-migrate",
+    "test": ""
   },
   "keywords": [],
   "author": "Richard Burk Orofeo <chardyy.orofeo@gmail.com>",
   "license": "ISC",
-  "description": "",
+  "description": "Cafe employee management system",
   "devDependencies": {
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/register": "^7.24.6",
     "db-migrate": "0.11.14",
-    "db-migrate-mysql": "3.0.0"
+    "db-migrate-mysql": "3.0.0",
+    "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "loglevel": "^1.9.1"
   }
 }
