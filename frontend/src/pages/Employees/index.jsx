@@ -2,6 +2,7 @@ import React from 'react'
 import '../index.css'
 import { useEmployees } from '../../hooks/useEmployees'
 import DataTable from '../../components/DataTable'
+import ActionRenderer from './actionRenderer'
 
 function Employees() {
   const { data, error, isLoading } = useEmployees()
@@ -13,7 +14,13 @@ function Employees() {
     { headerName: 'Phone Number', field: 'phone_number', sortable: true, filter: true },
     { headerName: 'Days worked in the cafe', field: 'days_worked', sortable: true, filter: true },
     { headerName: 'Café name', field: 'cafe', sortable: true, filter: true },
-    { headerName: 'Action', sortable: false, filter: false },
+    {
+      headerName: 'Action',
+      field: 'action',
+      cellRenderer: ActionRenderer,
+      sortable: false,
+      filter: false
+    }
   ]
 
   const handleCellClicked = (event) => {

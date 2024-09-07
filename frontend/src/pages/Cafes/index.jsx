@@ -2,6 +2,7 @@ import React from 'react'
 import { useCafes } from '../../hooks/useCafes'
 import DataTable from '../../components/DataTable'
 import '../index.css'
+import ActionRenderer from './actionRenderer'
 
 function Index() {
   const { data, error, isLoading } = useCafes()
@@ -29,7 +30,13 @@ function Index() {
     { headerName: 'Description', field: 'description', sortable: true, filter: true },
     { headerName: 'Employees', field: 'employees', sortable: true, filter: true },
     { headerName: 'Location', field: 'location', sortable: true, filter: true },
-    { headerName: 'Action', sortable: false, filter: false },
+    {
+      headerName: 'Action',
+      field: 'action',
+      cellRenderer: ActionRenderer,
+      sortable: false,
+      filter: false
+    }
   ]
 
   const handleCellClicked = (event) => {
