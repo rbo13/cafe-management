@@ -13,15 +13,6 @@ function createEmployee() {
       cafe
     } = req.body
 
-    let newStartDate
-    // in case we didn't specify
-    // a start_date, use the current date
-    if (start_date === undefined) {
-      newStartDate = new Date().toISOString().split('T')[0]
-    } else {
-      newStartDate = start_date
-    }
-
     const payload = {
       employee_name,
       email_address,
@@ -52,7 +43,7 @@ function createEmployee() {
       const employeeCafePayload = {
         employee_id: createdEmployee?.id,
         cafe_id: createdCafe?.id,
-        start_date: newStartDate
+        start_date
       }
 
       await createEmployeeCafeService(employeeCafePayload)

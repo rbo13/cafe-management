@@ -96,10 +96,8 @@ async function upsertService(payload) {
     ON DUPLICATE KEY UPDATE
       name = VALUES(name),
       email_address = VALUES(email_address),
-      phone_number = VALUES(phone_number),
-      gender = VALUES(gender);
+      phone_number = VALUES(phone_number);
   `
-
   const returningQuery = `SELECT * FROM employees WHERE id = ? LIMIT 1;`
 
   try {
@@ -129,6 +127,15 @@ async function getEmployeeByName(name) {
   return await conn.execute(sql)
 }
 
+async function getEmployeeById(id) {
+  const conn = await getConnection()
+  const query = `SELECT * FROM employees WHERE id = ? LIMIT 1;`
+
+  const sql = conn.format(query, [id])
+  logger.info("Executing query: " + sql)
+  return await conn.execute(sql)
+}
+
 function generateEmployeeId(size) {
   const prefix = 'UI'
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -146,5 +153,6 @@ export {
   getService,
   createEmployeeService,
   upsertService,
-  getEmployeeByName
+  getEmployeeByName,
+  getEmployeeById
 }

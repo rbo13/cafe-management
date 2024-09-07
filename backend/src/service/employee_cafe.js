@@ -15,6 +15,14 @@ async function upsertService(payload) {
     start_date
   } = payload
 
+  let newStartDate;
+
+  if (start_date === undefined) {
+    newStartDate = new Date().toISOString().split('T')[0]
+  } else {
+    newStartDate = start_date
+  }
+
   const query = `
     INSERT INTO employee_cafes (employee_id, cafe_id, start_date)
     VALUES (?, ?, ?)
@@ -25,7 +33,7 @@ async function upsertService(payload) {
   `
 
   try {
-    const sql = conn.format(query, [employee_id, cafe_id, start_date])
+    const sql = conn.format(query, [employee_id, cafe_id, newStartDate])
     await conn.beginTransaction()
     await conn.execute(sql)
     await conn.commit()
@@ -51,6 +59,14 @@ async function createEmployeeCafeService(payload) {
     cafe_id,
     start_date
   } = payload
+
+  let newStartDate;
+
+  if (start_date === undefined) {
+    newStartDate = new Date().toISOString().split('T')[0]
+  } else {
+    newStartDate = start_date
+  }
 
   const query = `
     INSERT INTO employee_cafes (employee_id, cafe_id, start_date)
