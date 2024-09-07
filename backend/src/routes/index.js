@@ -5,7 +5,7 @@ import { employeeRoutes } from './employees'
 function v1Routes(db) {
   const router = express.Router()
 
-  router.use('/cafes', cafeRoutes(db))
+  router.use('', cafeRoutes(db))
   router.use('/employees', employeeRoutes(db))
 
   return router

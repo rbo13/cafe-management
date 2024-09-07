@@ -6,9 +6,9 @@ import { createDatabaseConnection } from './database'
 
 const DB_CONFIG = {
   host: process.env.DB_HOST,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'cafe',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -17,6 +17,11 @@ const DB_CONFIG = {
 async function startApp({port = process.env.PORT} = {}) {
   const app = express()
   const db = await createDatabaseConnection(DB_CONFIG)
+
+  app.use(express.json())
+  app.use(express.urlencoded({
+    extended: true
+  }))
 
   app.use('/api/v1', v1Routes(db))
 
