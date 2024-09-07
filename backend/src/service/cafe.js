@@ -79,8 +79,28 @@ async function upsertService(payload) {
   }
 }
 
+async function deleteCafeService(id) {
+  const conn = await getConnection()
+
+  const query = `DELETE FROM cafes WHERE id = ? LIMIT 1;`
+
+  try {
+    const sql = conn.format(query, [id])
+    await conn.beginTransaction()
+    await conn.execute(sql)
+    await conn.commit()
+    logger.info("Executing query: " + sql)
+  } catch (error) {
+    await conn.rollback()
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 export {
   getService,
   getCafeByName,
-  upsertService
+  upsertService,
+  deleteCafeService,
 }

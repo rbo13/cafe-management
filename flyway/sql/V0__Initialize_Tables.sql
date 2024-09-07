@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS employee_cafes (
   cafe_id CHAR(36),
   start_date DATE NOT NULL,
   PRIMARY KEY (employee_id, cafe_id),
-  FOREIGN KEY (employee_id) REFERENCES employees(id),
-  FOREIGN KEY (cafe_id) REFERENCES cafes(id),
+  FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE,
+  FOREIGN KEY (cafe_id) REFERENCES cafes(id) ON DELETE CASCADE,
   UNIQUE (employee_id)
 );

@@ -2,6 +2,7 @@ import express from 'express'
 import { getCafe } from '../../controller/cafe/get_cafe'
 import { createCafe } from '../../controller/cafe/create'
 import { updateCafe } from '../../controller/cafe/update'
+import { deleteCafe } from '../../controller/cafe/delete'
 
 function cafeRoutes() {
   const router = express.Router()
@@ -9,6 +10,7 @@ function cafeRoutes() {
   router.get('/cafes', getCafe())
   router.post('/cafe', createCafe())
   router.put('/cafe', updateCafe())
+  router.delete('/cafe/:id', deleteCafe())
 
   return router
 }
