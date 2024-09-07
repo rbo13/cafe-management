@@ -1,11 +1,17 @@
-FROM node:18
+FROM node:18 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-
 RUN npm run build
 
+FROM node:18-alpine AS production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package*.json ./
+RUN npm install --only=production
+
 EXPOSE 3000
+ENV NODE_ENV=production
 ENV PORT=3000
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/index.js" ]
