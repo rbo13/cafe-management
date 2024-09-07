@@ -1,0 +1,46 @@
+import React from 'react'
+import '../index.css'
+import { useEmployees } from '../../hooks/useEmployees'
+import DataTable from '../../components/DataTable'
+
+function Employees() {
+  const { data, error, isLoading } = useEmployees()
+  
+  const columnDefs = [
+    { headerName: 'Employee ID', field: 'id', sortable: true, filter: true },
+    { headerName: 'Name', field: 'name', sortable: true, filter: true },
+    { headerName: 'Email Address', field: 'email_address', sortable: true, filter: true },
+    { headerName: 'Phone Number', field: 'phone_number', sortable: true, filter: true },
+    { headerName: 'Days worked in the cafe', field: 'days_worked', sortable: true, filter: true },
+    { headerName: 'Café name', field: 'cafe', sortable: true, filter: true },
+    { headerName: 'Action', sortable: false, filter: false },
+  ]
+
+  const handleCellClicked = (event) => {
+    console.log('Cell clicked:', event);
+  };
+
+  const handleRowSelected = (event) => {
+    console.log('Row selected:', event);
+  };
+
+  const customGridOptions = {
+    paginationPageSize: 10
+  }
+
+  return (
+    <div className="p-2">
+      <DataTable
+        data={data}
+        columnDefs={columnDefs}
+        error={error}
+        isLoading={isLoading}
+        gridOptions={customGridOptions}
+        onCellClicked={handleCellClicked}
+        onRowSelected={handleRowSelected}
+      />
+    </div>
+  )
+}
+
+export default Employees

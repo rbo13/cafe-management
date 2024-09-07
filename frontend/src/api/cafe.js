@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:3000/api/v1"
+import { BASE_URL } from "./constants"
 
 const fetchCafes = async () => {
   const GET_CAFES_URL = `${BASE_URL}/cafes`

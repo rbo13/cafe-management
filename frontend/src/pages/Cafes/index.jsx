@@ -1,16 +1,11 @@
 import React from 'react'
-import { useCafes } from '../hooks/useCafes'
-import DataTable from '../components/DataTable'
-import './index.css'
+import { useCafes } from '../../hooks/useCafes'
+import DataTable from '../../components/DataTable'
+import '../index.css'
 
 function Index() {
   const { data, error, isLoading } = useCafes()
   const columnDefs = [
-    { headerName: 'ID', field: 'id', sortable: true, filter: true },
-    { headerName: 'Name', field: 'name', sortable: true, filter: true },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true },
-    { headerName: 'Number of Employees', field: 'employees', sortable: true, filter: true },
     {
       headerName: 'Logo',
       field: 'logo',
@@ -29,7 +24,12 @@ function Index() {
       },
       sortable: false,
       filter: false
-    }
+    },
+    { headerName: 'Name', field: 'name', sortable: true, filter: true },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true },
+    { headerName: 'Employees', field: 'employees', sortable: true, filter: true },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true },
+    { headerName: 'Action', sortable: false, filter: false },
   ]
 
   const handleCellClicked = (event) => {
