@@ -2,11 +2,11 @@ import express from 'express'
 import { cafeRoutes } from './cafes'
 import { employeeRoutes } from './employees'
 
-function v1Routes(db) {
+function v1Routes() {
   const router = express.Router()
 
-  router.use('', cafeRoutes(db))
-  router.use('/employees', employeeRoutes(db))
+  router.use('', cafeRoutes())
+  router.use('/employees', employeeRoutes())
 
   return router
 }

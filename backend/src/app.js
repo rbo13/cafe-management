@@ -16,14 +16,14 @@ const DB_CONFIG = {
 
 async function startApp({port = process.env.PORT} = {}) {
   const app = express()
-  const db = await createDatabaseConnection(DB_CONFIG)
+  await createDatabaseConnection(DB_CONFIG)
   
   app.use(express.json())
   app.use(express.urlencoded({
     extended: true
   }))
 
-  app.use('/api/v1', v1Routes(db))
+  app.use('/api/v1', v1Routes())
 
   app.use(errorMiddleware)
 

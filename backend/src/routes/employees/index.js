@@ -1,10 +1,10 @@
 import express from 'express'
 import { getEmployee } from '../../controller/employee/get_employee'
 
-function employeeRoutes(db) {
+function employeeRoutes() {
   const router = express.Router()
 
-  router.get('/', getEmployee(db))
+  router.get('/', getEmployee())
 
   return router
 }

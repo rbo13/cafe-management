@@ -1,40 +1,33 @@
-import logger from 'loglevel'
-import { randomInt, randomUUID } from "node:crypto"
+import { randomUUID } from "node:crypto"
+import { upsertService } from '../../service/cafe'
 
-function createCafe(db) {
+function createCafe() {
   return async (req, res) => {
-    const {
-      name,
-      description,
-      location
-    } = req.body
+    const { id } = req.body
+    let newId;
 
-    const id = randomUUID()
+    if (id === undefined) {
+      newId = randomUUID()
+    } else {
+      newId = id
+    }
 
-    const query = `
-      INSERT INTO cafes (id, name, description, location)
-      VALUES (?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE
-        name = VALUES(name),
-        location = VALUES(location),
-        description = VALUES(description);
-    `
-    const conn = await db.getConnection()
+    const payload = {
+      id: newId,
+      ...req.body
+    }
 
     try {
-      const sql = conn.format(query, [id, name, description, location])
-      await conn.beginTransaction()
-      await conn.execute(sql)
-      await conn.commit()
-      logger.info("Executing query: " + sql)
-
-      return res.status(201).json({ message: "Created successfully!", data: { id, name, location }})
-    } catch (error) {
-      conn.rollback()
-
-      return res.status(500).json({ message: 'Database query failed', error })
-    } finally {
-      conn.release()
+      await upsertService(payload)
+      return res.status(201).json({
+        message: "Success",
+        data: payload
+      })
+    } catch(error) {
+      return res.status(500).json({
+        message: error.message,
+        data: payload
+      })
     }
   }
 }

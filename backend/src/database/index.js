@@ -1,7 +1,24 @@
 import mysql from "mysql2/promise"
 
+let pool;
+
 async function createDatabaseConnection(config) {
-  return mysql.createPool(config)
+  if (!pool) {
+    pool = mysql.createPool(config)
+  }
+  
+  return pool
 }
 
-export { createDatabaseConnection }
+async function getConnection() {
+  if (!pool) {
+    throw new Error('Database connection not initialized')
+  }
+
+  return pool.getConnection()
+}
+
+export {
+  createDatabaseConnection,
+  getConnection
+}
