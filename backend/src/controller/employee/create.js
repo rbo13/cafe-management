@@ -1,6 +1,6 @@
 import { getCafeByName, upsertService } from "../../service/cafe"
-import { getEmployeeByName, upsertService as upsertEmployeeService } from "../../service/employee"
-import { upsertService as upsertEmployeeCafeService } from "../../service/employee_cafe"
+import { createEmployeeService, getEmployeeByName, upsertService as upsertEmployeeService } from "../../service/employee"
+import { createEmployeeCafeService } from "../../service/employee_cafe"
 
 function createEmployee() {
   return async (req, res) => {
@@ -46,7 +46,7 @@ function createEmployee() {
       if (employeeRows.length > 0) {
         createdEmployee = employeeRows[0]
       } else {
-        createdEmployee = await upsertEmployeeService(payload)
+        createdEmployee = await createEmployeeService(payload)
       }
 
       const employeeCafePayload = {
@@ -55,9 +55,7 @@ function createEmployee() {
         start_date: newStartDate
       }
 
-      console.log(employeeCafePayload)
-
-      await upsertEmployeeCafeService(employeeCafePayload)
+      await createEmployeeCafeService(employeeCafePayload)
       
       return res.status(201).json({
         message: "Success",
@@ -67,7 +65,7 @@ function createEmployee() {
         }
       })
     } catch (error) {
-      return res.status(500).json({
+      return res.status(400).json({
         message: error.message,
         data: payload
       })
