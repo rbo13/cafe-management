@@ -136,6 +136,25 @@ async function getEmployeeById(id) {
   return await conn.execute(sql)
 }
 
+async function deleteEmployeeService(id) {
+  const conn = await getConnection()
+
+  const query = `DELETE FROM employees WHERE id = ? LIMIT 1;`
+
+  try {
+    const sql = conn.format(query, [id])
+    await conn.beginTransaction()
+    await conn.execute(sql)
+    await conn.commit()
+    logger.info("Executing query: " + sql)
+  } catch (error) {
+    await conn.rollback()
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 function generateEmployeeId(size) {
   const prefix = 'UI'
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -154,5 +173,6 @@ export {
   createEmployeeService,
   upsertService,
   getEmployeeByName,
-  getEmployeeById
+  getEmployeeById,
+  deleteEmployeeService
 }
