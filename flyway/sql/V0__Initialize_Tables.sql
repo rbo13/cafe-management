@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS employees (
   id VARCHAR(10) PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) NOT NULL UNIQUE,
   email_address VARCHAR(100) NOT NULL UNIQUE,
-  phone_number CHAR(8) NOT NULL,
+  phone_number CHAR(8) NOT NULL UNIQUE,
   gender ENUM('Male', 'Female') NOT NULL,
   CHECK (phone_number REGEXP '^[89][0-9]{7}$'),
   INDEX idx_employee_name (name)

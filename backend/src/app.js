@@ -6,9 +6,12 @@ import { createDatabaseConnection } from './database'
 
 const DB_CONFIG = {
   host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_NAME || 'cafe',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 }
 
 async function startApp({port = process.env.PORT} = {}) {
