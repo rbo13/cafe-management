@@ -1,5 +1,5 @@
 import logger from 'loglevel'
-import { getService } from '../../service/cafe'
+import { getCafeService } from '../../service/cafe'
 
 function getCafe() {
   return async (req, res) => {
@@ -10,11 +10,11 @@ function getCafe() {
     }
 
     try {
-      const [rows] = await getService(location)
-      return res.status(200).json(rows)
+      const [rows] = await getCafeService(location)
+      res.status(200).json(rows)
     } catch (error) {
-      logger.error(error.message)
-      return res.status(500).json({ message: 'Database query failed', error })
+      logger.error(`Error fetching cafes: ${error.message}`)
+      res.status(500).json({ message: 'Database query failed', error: error.message })
     }
   }
 }

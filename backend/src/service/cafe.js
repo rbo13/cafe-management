@@ -2,34 +2,48 @@ import logger from 'loglevel'
 import { randomUUID } from "node:crypto"
 import { getConnection } from '../database'
 
-async function getService(location) {
+async function getCafeService(location) {
   const conn = await getConnection()
 
-  let query = `
-    SELECT c.id, c.name, c.description, c.logo, c.location, COUNT(ec.employee_id) AS employees
-    FROM cafes c
-    LEFT JOIN employee_cafes ec ON c.id = ec.cafe_id
-  `
-  if (location) {
-    query += ` WHERE c.location = COALESCE(NULLIF(?, ''), c.location) `
-  }
+  try {
+    let query = `
+      SELECT c.id, c.name, c.description, c.logo, c.location, COUNT(ec.employee_id) AS employees
+      FROM cafes c
+      LEFT JOIN employee_cafes ec ON c.id = ec.cafe_id
+    `
+    if (location) {
+      query += ` WHERE c.location = COALESCE(NULLIF(?, ''), c.location) `
+    }
 
-  query += `
-    GROUP BY c.id, c.name, c.description, c.logo, c.location
-    ORDER BY employees DESC;
-  `
-  const sql = conn.format(query, [location])
-  logger.info("Executing query: " + sql)
-  return await conn.execute(sql)
+    query += `
+      GROUP BY c.id, c.name, c.description, c.logo, c.location
+      ORDER BY employees DESC;
+    `
+    const sql = conn.format(query, [location])
+    logger.info("Executing query: " + sql)
+    return await conn.execute(sql)
+  } catch (error) {
+    logger.error(`Database query failed: ${error.message}`)
+    throw error
+  } finally {
+    conn.release()
+  }
 }
 
 async function getCafeByName(name) {
   const conn = await getConnection()
-  const query = `SELECT * FROM cafes WHERE name = ? LIMIT 1;`
+  try {
+    const query = `SELECT * FROM cafes WHERE name = ? LIMIT 1;`
   
-  const sql = conn.format(query, [name])
-  logger.info("Executing query: " + sql)
-  return await conn.execute(sql)
+    const sql = conn.format(query, [name])
+    logger.info("Executing query: " + sql)
+    return await conn.execute(sql)
+  } catch {
+    logger.error(`Database query failed: ${error.message}`)
+    throw error
+  } finally {
+    conn.release()
+  }
 }
 
 async function upsertService(payload) {
@@ -99,7 +113,7 @@ async function deleteCafeService(id) {
 }
 
 export {
-  getService,
+  getCafeService,
   getCafeByName,
   upsertService,
   deleteCafeService,

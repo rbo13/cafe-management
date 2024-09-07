@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import 'express-async-errors'
 import logger from 'loglevel'
 import { v1Routes } from './routes'
@@ -14,9 +15,18 @@ const DB_CONFIG = {
   queueLimit: 0,
 }
 
+const CORS_OPTIONS = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
 async function startApp({port = process.env.PORT} = {}) {
   const app = express()
   await createDatabaseConnection(DB_CONFIG)
+
+  app.use(cors(CORS_OPTIONS))
   
   app.use(express.json())
   app.use(express.urlencoded({
