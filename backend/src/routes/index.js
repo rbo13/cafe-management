@@ -6,7 +6,7 @@ function v1Routes() {
   const router = express.Router()
 
   router.use('', cafeRoutes())
-  router.use('/employees', employeeRoutes())
+  router.use('', employeeRoutes())
 
   return router
 }

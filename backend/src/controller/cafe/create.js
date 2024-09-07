@@ -1,19 +1,8 @@
-import { randomUUID } from "node:crypto"
 import { upsertService } from '../../service/cafe'
 
 function createCafe() {
   return async (req, res) => {
-    const { id } = req.body
-    let newId;
-
-    if (id === undefined) {
-      newId = randomUUID()
-    } else {
-      newId = id
-    }
-
     const payload = {
-      id: newId,
       ...req.body
     }
 

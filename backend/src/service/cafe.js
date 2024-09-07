@@ -1,4 +1,5 @@
 import logger from 'loglevel'
+import { randomUUID } from "node:crypto"
 import { getConnection } from '../database'
 
 async function getService(location) {
@@ -22,10 +23,23 @@ async function getService(location) {
   return await conn.execute(sql)
 }
 
+async function getCafeByName(name) {
+  const conn = await getConnection()
+  const query = `SELECT * FROM cafes WHERE name = ? LIMIT 1;`
+  
+  const sql = conn.format(query, [name])
+  logger.info("Executing query: " + sql)
+  return await conn.execute(sql)
+}
+
 async function upsertService(payload) {
   if (!payload) {
     logger.error("upsertService:: Payload is required")
     return
+  }
+
+  if (payload.id === undefined) {
+    payload.id = randomUUID()
   }
 
   const conn = await getConnection()
@@ -46,12 +60,17 @@ async function upsertService(payload) {
       description = VALUES(description);
   `
 
+  const returningQuery = `SELECT * FROM cafes WHERE id = ? LIMIT 1;`
+
   try {
     const sql = conn.format(query, [id, name, description, location])
     await conn.beginTransaction()
     await conn.execute(sql)
+    const [rows] = await conn.execute(returningQuery, [id])
     await conn.commit()
+
     logger.info("Executing query: " + sql)
+    return rows.length > 0 ? rows[0] : null
   } catch (error) {
     await conn.rollback()
     throw error
@@ -62,5 +81,6 @@ async function upsertService(payload) {
 
 export {
   getService,
+  getCafeByName,
   upsertService
 }
