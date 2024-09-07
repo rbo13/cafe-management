@@ -17,7 +17,7 @@ const DB_CONFIG = {
 async function startApp({port = process.env.PORT} = {}) {
   const app = express()
   const db = await createDatabaseConnection(DB_CONFIG)
-
+  
   app.use(express.json())
   app.use(express.urlencoded({
     extended: true

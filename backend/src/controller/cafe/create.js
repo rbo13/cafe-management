@@ -1,30 +1,44 @@
 import logger from 'loglevel'
-import { randomInt } from "node:crypto"
+import { randomInt, randomUUID } from "node:crypto"
 
 function createCafe(db) {
   return async (req, res) => {
     const {
       name,
+      description,
       location
     } = req.body
 
-    const id = generateCafeId(8)
-    
-    return res.status(201).json({ message: "Cafe Created Successfully!", data: { id, name, location } })
+    const id = randomUUID()
+
+    const query = `
+      INSERT INTO cafes (id, name, description, location)
+      VALUES (?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE
+        name = VALUES(name),
+        location = VALUES(location),
+        description = VALUES(description);
+    `
+    const conn = await db.getConnection()
+
+    try {
+      const sql = conn.format(query, [id, name, description, location])
+      await conn.beginTransaction()
+      await conn.execute(sql)
+      await conn.commit()
+      logger.info("Executing query: " + sql)
+
+      return res.status(201).json({ message: "Created successfully!", data: { id, name, location }})
+    } catch (error) {
+      conn.rollback()
+
+      return res.status(500).json({ message: 'Database query failed', error })
+    } finally {
+      conn.release()
+    }
   }
 }
 
-function generateCafeId(size) {
-  const prefix = 'UI'
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let id = prefix
 
-  for (let i = 0; i < size; i++) {
-    const randomIndex = randomInt(0, characters.length);
-    id += characters[randomIndex];
-  }
-
-  return id
-}
 
 export { createCafe }
