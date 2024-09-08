@@ -1,18 +1,49 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import '../index.css'
 import { useSearch } from '@tanstack/react-router'
 import { useEmployees } from '../../hooks/useEmployees'
 import DataTable from '../../components/DataTable'
-import ActionRenderer from './actionRenderer'
+import ActionRenderer from './ActionRenderer'
 import { Route as EmployeeRoute } from '../../routes/employees/index.lazy'
 import DataTableHeader from '../../components/DataTableHeader'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { deleteEmployee } from '../../api/employee'
+import { Modal } from 'antd'
 
 function Employees() {
   const { cafe } = useSearch({
     from: EmployeeRoute.fullPath
   })
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [employeeId, setEmployeeId] = useState(null)
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: deleteEmployee,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['employees'] })
+      setIsModalOpen(false)
+    }
+  })
+
   const { data, error, isLoading } = useEmployees(cafe)
+
+  const showModal = (id) => {
+    setIsModalOpen(true)
+    setEmployeeId(id)
+  }
+
+  const handleOk = useCallback(() => {
+    if (employeeId) {
+      mutation.mutate(employeeId)
+    }
+  }, [employeeId])
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  }
   
   const columnDefs = [
     { headerName: 'Employee ID', field: 'id', sortable: true, filter: true },
@@ -22,25 +53,16 @@ function Employees() {
     { headerName: 'Days worked in the cafe', field: 'days_worked', sortable: true, filter: true },
     { headerName: 'Café name', field: 'cafe', sortable: true, filter: true },
     {
-      headerName: 'Action',
+      headerName: 'Actions',
       field: 'action',
       cellRenderer: ActionRenderer,
+      cellRendererParams: {
+        onShowModal: showModal
+      },
       sortable: false,
       filter: false
     }
   ]
-
-  const handleCellClicked = (event) => {
-    console.log('Cell clicked:', event)
-  }
-
-  const handleRowSelected = (event) => {
-    console.log('Row selected:', event)
-  }
-
-  const handleAddEmployee = (event) => {
-    console.log(event)
-  }
 
   const customGridOptions = {
     paginationPageSize: 15
@@ -52,7 +74,6 @@ function Employees() {
         title="Manage Employees"
         buttonText="Add Employee"
         url="/employees/add"
-        onAdd={handleAddEmployee}
         style={{ marginBottom: '10px' }}
       />
       <DataTable
@@ -61,9 +82,17 @@ function Employees() {
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
-        onCellClicked={handleCellClicked}
-        onRowSelected={handleRowSelected}
       />
+      <Modal
+        title="Confirm Delete"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="DELETE"
+        okButtonProps={{ danger: true }}
+      >
+        <p>Are you sure you want to delete this employee?</p>
+      </Modal>
     </div>
   )
 }

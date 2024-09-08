@@ -3,11 +3,11 @@ import { Button, Flex, Space } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Link } from '@tanstack/react-router'
 
-export default (params) => {
-  const { data } = params
+const ActionRenderer = (props) => {
+  const { data, onShowModal } = props
 
   const handleDelete = () => {
-    window.alert(`Delete ${data?.id}`);
+    onShowModal(data?.id)
   };
   
   return (
@@ -36,3 +36,5 @@ export default (params) => {
     </Flex>
   )
 }
+
+export default ActionRenderer

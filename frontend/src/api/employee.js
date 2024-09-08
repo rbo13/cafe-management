@@ -45,6 +45,11 @@ const addEmployee = async (employee) => {
   
   try {
     const response = await fetch(ADD_EMPLOYEE_URL, options)
+    if (!response.ok) {
+      const errorMessage = await response.json()
+      throw new Error(errorMessage.message || 'Failed to add employee')
+    }
+
     return await response.json()
   } catch (error) {
     throw error
@@ -69,10 +74,25 @@ const updateEmployee = async (newEmployee) => {
   }
 }
 
+const deleteEmployee = async (id) => {
+  const DELETE_EMPLOYEE_URL = `${BASE_URL}/employee/${id}`
+  const options = {
+    method: 'DELETE'
+  }
+  
+  try {
+    const response = await fetch(DELETE_EMPLOYEE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchEmployees,
   searchEmployees,
   fetchEmployeeById,
   addEmployee,
-  updateEmployee
+  updateEmployee,
+  deleteEmployee
 }

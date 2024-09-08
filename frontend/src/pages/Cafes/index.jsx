@@ -3,12 +3,12 @@ import { useCafes } from '../../hooks/useCafes'
 import DataTable from '../../components/DataTable'
 import { Input, Modal } from 'antd'
 import '../index.css'
-import ActionRenderer from './ActionRenderer'
 import EmployeesLinkRenderer from './employeesLinkRenderer'
 import LogoCellRenderer from './logoCellRenderer'
 import DataTableHeader from '../../components/DataTableHeader'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteCafe } from '../../api/cafe'
+import ActionRenderer from './actionRenderer'
 
 const { Search } = Input
 
@@ -34,11 +34,11 @@ function Index() {
     setCafeId(id)
   }
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     if (cafeId) {
       mutation.mutate(cafeId)
     }
-  }
+  }, [cafeId])
 
   const handleCancel = () => {
     setIsModalOpen(false);

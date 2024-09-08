@@ -21,7 +21,7 @@ function AddEmployee() {
   
   return (
     <div className='container'>
-      {mutation?.isError && <Alert message='Something went wrong, please try again' type='error' showIcon closable/>}
+      {mutation?.isError && <Alert message={`${mutation?.error?.message}`} type='error' showIcon closable/>}
       <AddForm
         onFormSubmit={handleSubmit}
       />
