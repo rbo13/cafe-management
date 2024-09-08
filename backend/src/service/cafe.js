@@ -7,9 +7,32 @@ async function getCafeService(location) {
 
   try {
     let query = `
-      SELECT c.id, c.name, c.description, c.logo, c.location, COUNT(ec.employee_id) AS employees
+      SELECT 
+        c.id, 
+        c.name, 
+        c.description, 
+        c.logo, 
+        c.location,
+        COALESCE(
+          JSON_ARRAYAGG(
+            CASE
+              WHEN e.id IS NOT NULL THEN JSON_OBJECT(
+                'employee_id', e.id,
+                'employee_name', e.name,
+                'employee_email', e.email_address,
+                'phone_number', e.phone_number,
+                'employee_gender', e.gender, 
+                'start_date', ec.start_date
+              )
+              ELSE JSON_OBJECT()
+            END
+          ),
+          JSON_ARRAY()
+        ) AS employees,
+      COUNT(e.id) AS employee_count
       FROM cafes c
       LEFT JOIN employee_cafes ec ON c.id = ec.cafe_id
+      LEFT JOIN employees e ON ec.employee_id = e.id
     `
     if (location) {
       query += ` WHERE c.location = COALESCE(NULLIF(?, ''), c.location) `
@@ -17,7 +40,7 @@ async function getCafeService(location) {
 
     query += `
       GROUP BY c.id, c.name, c.description, c.logo, c.location
-      ORDER BY employees DESC;
+      ORDER BY employee_count DESC;
     `
     const sql = conn.format(query, [location])
     logger.info("Executing query: " + sql)
