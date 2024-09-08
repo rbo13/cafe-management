@@ -7,7 +7,7 @@ import { useBlocker } from '@tanstack/react-router';
 const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
   const { control, handleSubmit, formState: { isDirty, errors }, reset } = useForm({
     defaultValues: initialValues,
-  });
+  })
 
   const [fileList, setFileList] = useState([]);
 
@@ -23,16 +23,25 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
   const handleBeforeUpload = (file) => {
     // prevent automatic upload
     return false
-  };
+  }
 
-  const handleFileChange = ({ fileList }) => setFileList(fileList);
+  const handleFileChange = ({ fileList }) => setFileList(fileList)
 
   const handleFormSubmit = (data) => {
     onSubmit({
       ...data,
       logo: fileList,
-    });
-  };
+    })
+
+    reset({
+      ...data,
+      logo: fileList
+    }, {
+      keepValues: false,
+      keepDirty: false,
+      keepDefaultValues: false
+    })
+  }
 
   return (
     <Card>
