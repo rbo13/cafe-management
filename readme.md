@@ -42,7 +42,7 @@ cafe-management
   - Holds database migration scripts managed by Flyway. These scripts are responsible for versioning and managing changes in the database schema, typically written in SQL. We just change the content of this directory if we update something in our database.
 
 - **frontend**
-  - Contains the client-side application code, this is where our UI lives.
+  - Contains the client-side application code, this is where our UI lives. This is using React with Vite.
 
 - **docker-compose.yml**
   - This facilitates running the entire stack locally using Docker, including backend, frontend, and databases.
