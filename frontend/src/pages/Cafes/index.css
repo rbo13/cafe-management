@@ -1,3 +1,7 @@
 span.ag-cell-value a {
   text-decoration: none;
 }
+
+.container {
+  padding: 1vh;
+}
