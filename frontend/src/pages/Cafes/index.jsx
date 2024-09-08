@@ -4,6 +4,8 @@ import DataTable from '../../components/DataTable'
 import { Input } from 'antd'
 import '../index.css'
 import ActionRenderer from './actionRenderer'
+import EmployeesLinkRenderer from './employeesLinkRenderer'
+import LogoCellRenderer from './logoCellRenderer'
 
 const { Search } = Input
 
@@ -15,25 +17,19 @@ function Index() {
     {
       headerName: 'Logo',
       field: 'logo',
-      cellRenderer: (params) => {
-        return (
-          <span className="imgSpanLogo">
-            {params.value && (
-              <img
-                alt={`${params.value} Flag`}
-                src={''}
-                className="logo"
-              />
-            )}
-          </span>
-        )
-      },
+      cellRenderer: LogoCellRenderer,
       sortable: false,
       filter: false
     },
     { headerName: 'Name', field: 'name', sortable: true, filter: true },
     { headerName: 'Description', field: 'description', sortable: true, filter: true },
-    { headerName: 'Employees', field: 'employees', sortable: true, filter: true },
+    {
+      headerName: 'Employees',
+      field: 'employees',
+      cellRenderer: EmployeesLinkRenderer,
+      sortable: true,
+      filter: true
+    },
     { headerName: 'Location', field: 'location', sortable: true, filter: true },
     {
       headerName: 'Action',
