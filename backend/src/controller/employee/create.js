@@ -23,35 +23,30 @@ function createEmployee() {
     let createdCafe;
     let createdEmployee;
     try {
-      const [rows] = await getCafeByName(cafe?.name)
-      if (rows.length > 0) {
-        createdCafe = rows[0]
-      } else {
-        createdCafe = await upsertService({
-          name: cafe?.name,
-          location: cafe?.location
-        })
+      createdEmployee = await createEmployeeService(payload)
+    
+      if (cafe !== undefined) {
+        const [rows] = await getCafeByName(cafe?.name)
+        if (rows.length > 0) {
+          createdCafe = rows[0]
+        } else {
+          createdCafe = await upsertService({
+            name: cafe?.name,
+            location: cafe?.location
+          })
+        }
+
+        const employeeCafePayload = {
+          employee_id: createdEmployee?.id,
+          cafe_id: createdCafe?.id ? createdCafe?.id : 0,
+          start_date
+        }
+        await createEmployeeCafeService(employeeCafePayload)
       }
 
-      const [employeeRows] = await getEmployeeByName(employee_name)
-      if (employeeRows.length > 0) {
-        createdEmployee = employeeRows[0]
-      } else {
-        createdEmployee = await createEmployeeService(payload)
-      }
-
-      const employeeCafePayload = {
-        employee_id: createdEmployee?.id,
-        cafe_id: createdCafe?.id,
-        start_date
-      }
-
-      await createEmployeeCafeService(employeeCafePayload)
-      
       return res.status(201).json({
         message: "Success",
         data: {
-          createdCafe,
           createdEmployee
         }
       })

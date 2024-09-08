@@ -75,7 +75,7 @@ async function createEmployeeCafeService(payload) {
   const returningQuery = `SELECT * FROM employee_cafes WHERE employee_id = ? AND cafe_id = ? LIMIT 1;`
 
   try {
-    const sql = conn.format(query, [employee_id, cafe_id, start_date])
+    const sql = conn.format(query, [employee_id, cafe_id, newStartDate])
     await conn.beginTransaction()
     await conn.execute(sql)
 

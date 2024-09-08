@@ -22,7 +22,26 @@ const searchEmployees = async (cafeName) => {
   return await response.json()
 }
 
+const addEmployee = async (employee) => {
+  const ADD_EMPLOYEE_URL = `${BASE_URL}/employee`
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(employee)
+  }
+  
+  try {
+    const response = await fetch(ADD_EMPLOYEE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchEmployees,
-  searchEmployees
+  searchEmployees,
+  addEmployee
 }
