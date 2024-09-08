@@ -69,10 +69,25 @@ const addCafe = async (cafe) => {
   }
 }
 
+const deleteCafe = async (id) => {
+  const DELETE_CAFE_URL = `${BASE_URL}/cafe/${id}`
+  const options = {
+    method: 'DELETE'
+  }
+  
+  try {
+    const response = await fetch(DELETE_CAFE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchCafes,
   searchCafes,
   fetchCafeById,
   updateCafe,
-  addCafe
+  addCafe,
+  deleteCafe
 }

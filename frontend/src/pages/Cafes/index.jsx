@@ -7,6 +7,8 @@ import ActionRenderer from './ActionRenderer'
 import EmployeesLinkRenderer from './employeesLinkRenderer'
 import LogoCellRenderer from './logoCellRenderer'
 import DataTableHeader from '../../components/DataTableHeader'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { deleteCafe } from '../../api/cafe'
 
 const { Search } = Input
 
@@ -15,14 +17,27 @@ function Index() {
   const { data, error, isLoading } = useCafes(searchTerm)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [cafeId, setCafeId] = useState(null)
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: deleteCafe,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cafes'] })
+      setIsModalOpen(false)
+    }
+  })
 
   const showModal = (id) => {
-    console.log('ID', id)
     setIsModalOpen(true)
+    setCafeId(id)
   }
 
   const handleOk = () => {
-    setIsModalOpen(false);
+    if (cafeId) {
+      mutation.mutate(cafeId)
+    }
   }
 
   const handleCancel = () => {
@@ -107,6 +122,7 @@ function Index() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okText="DELETE"
         okButtonProps={{ danger: true }}
       >
         <p>Are you sure you want to delete this cafe?</p>

@@ -7,7 +7,6 @@ const ActionRenderer = (props) => {
   const { data, onShowModal } = props
 
   const handleDelete = () => {
-    console.log('Handle delete', data?.id)
     onShowModal(data?.id)
   };
   

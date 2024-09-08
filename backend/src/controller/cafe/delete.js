@@ -6,7 +6,9 @@ function deleteCafe() {
 
     try {
       await deleteCafeService(cafeId)
-      return res.status(204).send('OK')
+      return res.status(200).send({
+        message: 'Cafe deleted successfully!'
+      })
     } catch (error) {
       return res.status(404).json({
         message: error.message

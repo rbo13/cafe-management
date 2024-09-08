@@ -5,7 +5,9 @@ function deleteEmployee() {
     const employeeId = req.params.id
     try {
       await deleteEmployeeService(employeeId)
-      return res.status(204).send('OK')
+      return res.status(200).send({
+        message: 'Employee deleted successfully!'
+      })
     } catch (error) {
       return res.status(404).json({
         message: error.message
