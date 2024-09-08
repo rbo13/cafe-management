@@ -63,6 +63,11 @@ const addCafe = async (cafe) => {
   
   try {
     const response = await fetch(ADD_CAFE_URL, options)
+    if (!response.ok) {
+      const errorMessage = await response.json()
+      throw new Error(errorMessage.message || 'Failed to add cafe')
+    }
+
     return await response.json()
   } catch (error) {
     throw error
