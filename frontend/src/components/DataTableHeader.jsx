@@ -8,7 +8,6 @@ const { Text } = Typography;
 const DataTableHeader = ({ 
   title,
   url,
-  onAdd,
   buttonText,
   addIcon = <PlusOutlined />,
   addType = "primary",
@@ -34,18 +33,15 @@ const DataTableHeader = ({
       </Text>
       <Space>
         {children}
-        {onAdd && (
-          <Link to={url}>
-            <Button
-              type={addType}
-              onClick={onAdd}
-              icon={addIcon}
-              style={buttonStyle}
-            >
-              {buttonText}
-            </Button>
-          </Link>
-        )}
+        <Link to={url}>
+          <Button
+            type={addType}
+            icon={addIcon}
+            style={buttonStyle}
+          >
+            {buttonText}
+          </Button>
+        </Link>
       </Space>
     </div>
   )

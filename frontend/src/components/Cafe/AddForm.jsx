@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import Form from '../Form';
+import { useRouter } from '@tanstack/react-router';
 
 function AddForm({ onFormSubmit }) {
   const [initialValues, setInitialValues] = useState({})
+  const router = useRouter()
+  
 
   const formFields = [
     {
@@ -48,7 +51,7 @@ function AddForm({ onFormSubmit }) {
   }
 
   const handleCancel = () => {
-    console.log('Cancelling')
+    router.history.back()
   }
 
   return (

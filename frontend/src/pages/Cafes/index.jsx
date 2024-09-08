@@ -49,10 +49,6 @@ function Index() {
     console.log('Row selected:', event)
   }
 
-  const handleAddCafe = (event) => {
-    console.log('Add cafe: ', event)
-  }
-
   const customGridOptions = {
     paginationPageSize: 15
   }
@@ -75,7 +71,6 @@ function Index() {
         title="Manage Cafes"
         buttonText="Add Cafe"
         url="/cafes/add"
-        onAdd={handleAddCafe}
         style={{ marginBottom: '10px' }}
       />
       <DataTable
