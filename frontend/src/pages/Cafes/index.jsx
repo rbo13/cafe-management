@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { useCafes } from '../../hooks/useCafes'
 import DataTable from '../../components/DataTable'
-import { Input } from 'antd'
+import { Input, Modal } from 'antd'
 import '../index.css'
-import ActionRenderer from './actionRenderer'
+import ActionRenderer from './ActionRenderer'
 import EmployeesLinkRenderer from './employeesLinkRenderer'
 import LogoCellRenderer from './logoCellRenderer'
 import DataTableHeader from '../../components/DataTableHeader'
@@ -13,6 +13,21 @@ const { Search } = Input
 function Index() {
   const [searchTerm, setSearchTerm] = useState('')
   const { data, error, isLoading } = useCafes(searchTerm)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const showModal = (id) => {
+    console.log('ID', id)
+    setIsModalOpen(true)
+  }
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  }
 
   const columnDefs = [
     {
@@ -36,18 +51,13 @@ function Index() {
       headerName: 'Action',
       field: 'action',
       cellRenderer: ActionRenderer,
+      cellRendererParams: {
+        onShowModal: showModal
+      },
       sortable: false,
       filter: false
     }
   ]
-
-  const handleCellClicked = (event) => {
-    console.log('Cell clicked:', event)
-  }
-
-  const handleRowSelected = (event) => {
-    console.log('Row selected:', event)
-  }
 
   const customGridOptions = {
     paginationPageSize: 15
@@ -59,8 +69,20 @@ function Index() {
 
   return (
     <div className="container">
-      <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: '16px' }}>
+      <div
+        style={{
+          marginBottom: '16px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            gap: '16px'
+          }}
+        >
           <Search
             placeholder="Filter by Location"
             onPressEnter={handleSearch}
@@ -79,9 +101,16 @@ function Index() {
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
-        onCellClicked={handleCellClicked}
-        onRowSelected={handleRowSelected}
       />
+      <Modal
+        title="Confirm Delete"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okButtonProps={{ danger: true }}
+      >
+        <p>Are you sure you want to delete this cafe?</p>
+      </Modal>
     </div>
   )
 }
