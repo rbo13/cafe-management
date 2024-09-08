@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { Input, Button, Upload, Form as AntdForm, message, Card, Typography, Space } from 'antd';
+import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
+import { useBlocker } from '@tanstack/react-router';
 
 const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
-  const { control, handleSubmit, formState: { errors }, reset } = useForm({
+  const { control, handleSubmit, formState: { isDirty, errors }, reset } = useForm({
     defaultValues: initialValues,
   });
 
   const [fileList, setFileList] = useState([]);
+
+  useBlocker({
+    blockerFn: () => window.confirm('You have unsaved changes, are you sure you want to leave?'),
+    condition: isDirty
+  })
 
   useEffect(() => {
     reset(initialValues)
