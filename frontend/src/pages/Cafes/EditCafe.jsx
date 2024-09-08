@@ -22,6 +22,7 @@ function EditCafe() {
   return (
     <div className='container'>
       {mutation?.isSuccess && <Alert message="Cafe Updated successfully!" type='success' showIcon closable/>}
+      {mutation?.isError && <Alert message="Something went wrong, please try again" type='error' showIcon closable/>}
       <EditForm
         onFormSubmit={handleSubmit}
       />

@@ -6,7 +6,6 @@ function AddForm({ onFormSubmit }) {
   const [initialValues, setInitialValues] = useState({})
   const router = useRouter()
   
-
   const formFields = [
     {
       name: 'name',

@@ -24,6 +24,7 @@ function AddCafe() {
   return (
     <div className='container'>
       {mutation?.isSuccess && <Alert message={name && `${name} has been added successfully`} type='success' showIcon closable/>}
+      {mutation?.isError && <Alert message='Something went wrong, please try again' type='error' showIcon closable/>}
       <AddForm
         onFormSubmit={handleSubmit}
       />
