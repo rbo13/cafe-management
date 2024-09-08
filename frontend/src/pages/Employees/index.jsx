@@ -40,7 +40,7 @@ function Employees() {
   }
 
   return (
-    <div className="p-2">
+    <div className="container">
       <DataTable
         data={data}
         headerTitle="Manage Employees"

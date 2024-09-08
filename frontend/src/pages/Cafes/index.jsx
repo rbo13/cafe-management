@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { useCafes } from '../../hooks/useCafes'
 import DataTable from '../../components/DataTable'
+import { Input } from 'antd'
 import '../index.css'
 import ActionRenderer from './actionRenderer'
 
+const { Search } = Input
+
 function Index() {
-  const { data, error, isLoading } = useCafes()
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, error, isLoading } = useCafes(searchTerm)
+
   const columnDefs = [
     {
       headerName: 'Logo',
@@ -55,8 +60,20 @@ function Index() {
     paginationPageSize: 10
   }
 
+  const handleSearch = useCallback((event) => {
+    setSearchTerm(event.target.value)
+  }, [])
+
   return (
-    <div className="p-2">
+    <div className="container">
+      <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '16px' }}>
+          <Search
+            placeholder="Filter by Location"
+            onPressEnter={handleSearch}
+          />
+        </div>
+      </div>
       <DataTable
         data={data}
         headerTitle="Manage Cafes"

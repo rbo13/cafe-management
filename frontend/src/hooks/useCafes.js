@@ -1,10 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchCafes } from '../api/cafe'
+import { fetchCafes, searchCafes } from '../api/cafe'
 
-const useCafes = () => {
+const useCafes = (searchTerm) => {
   return useQuery({
-    queryKey: ['cafes'],
-    queryFn: fetchCafes
+    queryKey: ['cafes', searchTerm],
+    queryFn: () => {
+      if (searchTerm) {
+        return searchCafes(searchTerm)
+      }
+
+      return fetchCafes()
+    },
+    select: (data) => {
+      return data
+    }
   })
 }
 
