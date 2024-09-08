@@ -8,7 +8,7 @@ const TopNavigation = () => {
     {
       label: 'Cafes',
       key: 'cafe',
-      href: '/',
+      href: '/cafes',
       icon: <HomeOutlined />,
     },
     {
@@ -22,7 +22,7 @@ const TopNavigation = () => {
   return (
     <Menu
       mode='horizontal'
-      defaultSelectedKeys={['cafes']}
+      defaultSelectedKeys={['cafe']}
       items={items.map(item => ({
         key: item.key,
         label: (
