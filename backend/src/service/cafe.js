@@ -7,12 +7,13 @@ async function getCafeService(location) {
 
   try {
     let query = `
-      SELECT 
-        c.id, 
-        c.name, 
-        c.description, 
-        c.logo, 
+      SELECT
+        c.name,
+        c.description,
+        COUNT(e.id) AS employees,
+        c.logo,
         c.location,
+        c.id,
         COALESCE(
           JSON_ARRAYAGG(
             CASE
@@ -28,8 +29,7 @@ async function getCafeService(location) {
             END
           ),
           JSON_ARRAY()
-        ) AS employees,
-      COUNT(e.id) AS employee_count
+        ) AS employees_working
       FROM cafes c
       LEFT JOIN employee_cafes ec ON c.id = ec.cafe_id
       LEFT JOIN employees e ON ec.employee_id = e.id
@@ -40,7 +40,7 @@ async function getCafeService(location) {
 
     query += `
       GROUP BY c.id, c.name, c.description, c.logo, c.location
-      ORDER BY employee_count DESC;
+      ORDER BY employees DESC;
     `
     const sql = conn.format(query, [location])
     logger.info("Executing query: " + sql)
