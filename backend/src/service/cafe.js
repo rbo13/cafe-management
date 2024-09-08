@@ -69,6 +69,22 @@ async function getCafeByName(name) {
   }
 }
 
+async function getCafeByIdService(id) {
+  const conn = await getConnection()
+  try {
+    const query = `SELECT * FROM cafes WHERE id = ? LIMIT 1;`
+  
+    const sql = conn.format(query, [id])
+    logger.info("Executing query: " + sql)
+    return await conn.execute(sql)
+  } catch {
+    logger.error(`Database query failed: ${error.message}`)
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 async function upsertService(payload) {
   if (!payload) {
     logger.error("upsertService:: Payload is required")
@@ -138,6 +154,7 @@ async function deleteCafeService(id) {
 export {
   getCafeService,
   getCafeByName,
+  getCafeByIdService,
   upsertService,
   deleteCafeService,
 }

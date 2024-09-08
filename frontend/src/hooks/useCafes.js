@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchCafes, searchCafes } from '../api/cafe'
+import { fetchCafeById, fetchCafes, searchCafes } from '../api/cafe'
 
 const useCafes = (searchTerm) => {
   return useQuery({
@@ -17,6 +17,19 @@ const useCafes = (searchTerm) => {
   })
 }
 
+const useCafe = (cafeId) => {
+  return useQuery({
+    queryKey: ['cafe', cafeId],
+    queryFn: () => {
+      return fetchCafeById(cafeId)
+    },
+    select: (data) => {
+      return data
+    }
+  })
+}
+
 export {
-  useCafes
+  useCafes,
+  useCafe
 }

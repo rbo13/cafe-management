@@ -11,6 +11,17 @@ const fetchCafes = async () => {
   return await response.json()
 }
 
+const fetchCafeById = async (id) => {
+  const GET_CAFE_BY_ID_URL = `${BASE_URL}/cafes/${id}`
+  const response = await fetch(GET_CAFE_BY_ID_URL)
+  
+  if (!response.ok) {
+    throw new Error('Something went wrong')
+  }
+
+  return await response.json()
+}
+
 const searchCafes = async (location) => {
   const SEARCH_CAFES_URL = `${BASE_URL}/cafes?location=${location}`
   const response = await fetch(SEARCH_CAFES_URL)
@@ -24,5 +35,6 @@ const searchCafes = async (location) => {
 
 export {
   fetchCafes,
-  searchCafes
+  searchCafes,
+  fetchCafeById
 }

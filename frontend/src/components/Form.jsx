@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Input, Button, Upload, Form as AntdForm, message, Card, Typography, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
 
 const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: initialValues,
   });
 
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    reset(initialValues)
+  }, [initialValues, reset])
 
   const handleBeforeUpload = (file) => {
     // prevent automatic upload
@@ -70,7 +74,7 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
         </AntdForm.Item>
       </AntdForm>
     </Card>
-  );
-};
+  )
+}
 
 export default Form
