@@ -6,6 +6,7 @@ import '../index.css'
 import ActionRenderer from './actionRenderer'
 import EmployeesLinkRenderer from './employeesLinkRenderer'
 import LogoCellRenderer from './logoCellRenderer'
+import DataTableHeader from '../../components/DataTableHeader'
 
 const { Search } = Input
 
@@ -70,17 +71,21 @@ function Index() {
           />
         </div>
       </div>
+      <DataTableHeader
+        title="Manage Cafes"
+        buttonText="Add Cafe"
+        url="/cafes/add"
+        onAdd={handleAddCafe}
+        style={{ marginBottom: '10px' }}
+      />
       <DataTable
         data={data}
-        headerTitle="Manage Cafes"
-        buttonText="Add Cafe"
         columnDefs={columnDefs}
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
         onCellClicked={handleCellClicked}
         onRowSelected={handleRowSelected}
-        onAdd={handleAddCafe}
       />
     </div>
   )

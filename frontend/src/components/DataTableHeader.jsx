@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from '@tanstack/react-router';
 import { Button, Space, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -6,6 +7,7 @@ const { Text } = Typography;
 
 const DataTableHeader = ({ 
   title,
+  url,
   onAdd,
   buttonText,
   addIcon = <PlusOutlined />,
@@ -33,14 +35,16 @@ const DataTableHeader = ({
       <Space>
         {children}
         {onAdd && (
-          <Button
-            type={addType}
-            onClick={onAdd}
-            icon={addIcon}
-            style={buttonStyle}
-          >
-            {buttonText}
-          </Button>
+          <Link to={url}>
+            <Button
+              type={addType}
+              onClick={onAdd}
+              icon={addIcon}
+              style={buttonStyle}
+            >
+              {buttonText}
+            </Button>
+          </Link>
         )}
       </Space>
     </div>

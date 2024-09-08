@@ -5,6 +5,7 @@ import { useEmployees } from '../../hooks/useEmployees'
 import DataTable from '../../components/DataTable'
 import ActionRenderer from './actionRenderer'
 import { Route as EmployeeRoute } from '../../routes/employees/index.lazy'
+import DataTableHeader from '../../components/DataTableHeader'
 
 function Employees() {
   const { cafe } = useSearch({
@@ -47,17 +48,21 @@ function Employees() {
 
   return (
     <div className="container">
+      <DataTableHeader
+        title="Manage Employees"
+        buttonText="Add Employee"
+        url="/employees/add"
+        onAdd={handleAddEmployee}
+        style={{ marginBottom: '10px' }}
+      />
       <DataTable
         data={data}
-        headerTitle="Manage Employees"
-        buttonText="Add Employee"
         columnDefs={columnDefs}
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
         onCellClicked={handleCellClicked}
         onRowSelected={handleRowSelected}
-        onAdd={handleAddEmployee}
       />
     </div>
   )
