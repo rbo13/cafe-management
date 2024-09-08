@@ -40,12 +40,16 @@ function Index() {
   ]
 
   const handleCellClicked = (event) => {
-    console.log('Cell clicked:', event);
-  };
+    console.log('Cell clicked:', event)
+  }
 
   const handleRowSelected = (event) => {
-    console.log('Row selected:', event);
-  };
+    console.log('Row selected:', event)
+  }
+
+  const handleAddCafe = (event) => {
+    console.log('Add cafe: ', event)
+  }
 
   const customGridOptions = {
     paginationPageSize: 10
@@ -55,12 +59,15 @@ function Index() {
     <div className="p-2">
       <DataTable
         data={data}
+        headerTitle="Manage Cafes"
+        buttonText="Add Cafe"
         columnDefs={columnDefs}
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
         onCellClicked={handleCellClicked}
         onRowSelected={handleRowSelected}
+        onAdd={handleAddCafe}
       />
     </div>
   )

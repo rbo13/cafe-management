@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react'
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
+import { PlusOutlined } from '@ant-design/icons';
+import DataTableHeader from './DataTableHeader';
 
 const DataTable = ({
   data = [],
@@ -11,6 +13,9 @@ const DataTable = ({
   gridOptions = {},
   onCellClicked,
   onRowSelected,
+  onAdd,
+  headerTitle,
+  buttonText
 }) => {
   const defaultGridOptions = useMemo(() => ({
     pagination: true,
@@ -41,6 +46,13 @@ const DataTable = ({
 
   return (
     <div style={containerStyle}>
+      <DataTableHeader
+        title={headerTitle}
+        onAdd={onAdd}
+        buttonText={buttonText}
+        addIcon={<PlusOutlined />}
+        style={{ marginBottom: '10px' }}
+      /> 
       <div
         style={gridStyle}
         className="ag-theme-quartz"
@@ -52,7 +64,8 @@ const DataTable = ({
           onCellClicked={onCellClicked}
           onRowSelected={onRowSelected}
           {...mergedGridOptions}
-        />
+        >
+        </AgGridReact>
       </div>
     </div>
   )

@@ -24,12 +24,16 @@ function Employees() {
   ]
 
   const handleCellClicked = (event) => {
-    console.log('Cell clicked:', event);
-  };
+    console.log('Cell clicked:', event)
+  }
 
   const handleRowSelected = (event) => {
-    console.log('Row selected:', event);
-  };
+    console.log('Row selected:', event)
+  }
+
+  const handleAddEmployee = (event) => {
+    console.log(event)
+  }
 
   const customGridOptions = {
     paginationPageSize: 10
@@ -39,12 +43,15 @@ function Employees() {
     <div className="p-2">
       <DataTable
         data={data}
+        headerTitle="Manage Employees"
+        buttonText="Add Employee"
         columnDefs={columnDefs}
         error={error}
         isLoading={isLoading}
         gridOptions={customGridOptions}
         onCellClicked={handleCellClicked}
         onRowSelected={handleRowSelected}
+        onAdd={handleAddEmployee}
       />
     </div>
   )

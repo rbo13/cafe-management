@@ -1,0 +1,1 @@
+DB_HOST=localhost DB_USER=root DB_PASSWORD=password DB_NAME=cafe PORT=3000 npm start
