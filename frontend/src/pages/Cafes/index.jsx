@@ -8,7 +8,7 @@ import LogoCellRenderer from './logoCellRenderer'
 import DataTableHeader from '../../components/DataTableHeader'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteCafe } from '../../api/cafe'
-import ActionRenderer from './actionRenderer'
+import ActionRenderer from './ActionRenderer'
 
 const { Search } = Input
 

@@ -8,6 +8,11 @@ export default defineConfig({
     TanStackRouterVite(),
     react(),
   ],
+  define: {
+    'process.env': {
+      VITE_API_BASE_URL: process.env.VITE_API_BASE_URL
+    }
+  },
   server: {
     host: true
   }

@@ -31,30 +31,32 @@ services:
       - db
     networks:
       - app_network
-  # app:
-  #   container_name: backend
-  #   build:
-  #     context: backend
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     DB_HOST: db
-  #     DB_USER: root
-  #     DB_PASSWORD: password
-  #     DB_NAME: cafe
-  #   depends_on:
-  #     - flyway
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - app_network
-  # web:
-  #   container_name: web_app
-  #   build:
-  #     context: frontend
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - app
-  #   ports:
-  #     - 8080:80
-  #   networks:
-  #     - app_network
+  api:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: cafe
+    depends_on:
+      - flyway
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+  web:
+    container_name: web_app
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - 8080:80
+    environment:
+      - VITE_API_BASE_URL=http://api:3000/api/v1
+    networks:
+      - app_network
