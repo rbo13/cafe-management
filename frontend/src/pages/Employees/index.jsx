@@ -1,11 +1,17 @@
 import React from 'react'
 import '../index.css'
+import { useSearch } from '@tanstack/react-router'
 import { useEmployees } from '../../hooks/useEmployees'
 import DataTable from '../../components/DataTable'
 import ActionRenderer from './actionRenderer'
+import { Route as EmployeeRoute } from '../../routes/employees/index.lazy'
 
 function Employees() {
-  const { data, error, isLoading } = useEmployees()
+  const { cafe } = useSearch({
+    from: EmployeeRoute.fullPath
+  })
+
+  const { data, error, isLoading } = useEmployees(cafe)
   
   const columnDefs = [
     { headerName: 'Employee ID', field: 'id', sortable: true, filter: true },

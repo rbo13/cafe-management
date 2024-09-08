@@ -9,7 +9,10 @@ export default (params) => {
 
   return (
     <Link
-      to={`/employees?cafe=${cafeName}`}
+      to='/employees'
+      search={{
+        cafe: cafeName
+      }}
       params={{ cafeId: params.data.id }}
     >
       {params.value}

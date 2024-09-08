@@ -1,10 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchEmployees } from '../api/employee'
+import { fetchEmployees, searchEmployees } from '../api/employee'
 
-const useEmployees = () => {
+const useEmployees = (searchTerm) => {
   return useQuery({
-    queryKey: ['employees'],
-    queryFn: fetchEmployees
+    queryKey: ['employees', searchTerm],
+    queryFn: () => {
+      if (searchTerm) {
+        return searchEmployees(searchTerm)
+      }
+
+      return fetchEmployees()
+    },
+    select: (data) => {
+      return data
+    }
   })
 }
 

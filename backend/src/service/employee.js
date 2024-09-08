@@ -13,10 +13,7 @@ async function getService(cafe) {
         e.email_address,
         e.phone_number,
         DATEDIFF(CURDATE(), ec.start_date) AS days_worked,
-        JSON_OBJECT(
-          'name', c.name,
-          'location', c.location
-        ) AS cafe
+        c.name as cafe
       FROM 
         employees e
       LEFT JOIN 
