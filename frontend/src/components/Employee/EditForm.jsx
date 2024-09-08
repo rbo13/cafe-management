@@ -3,19 +3,14 @@ import Form from '../Form'
 import { Alert, Spin } from 'antd'
 import { useRouter } from '@tanstack/react-router'
 import { Route as EditEmployeeRoute } from '../../routes/employees/$employeeId.edit'
+import { useEmployee } from '../../hooks/useEmployees'
 
-function EditForm() {
+function EditForm({ onFormSubmit }) {
   const { employeeId } = EditEmployeeRoute.useParams()
   const router = useRouter()
 
   const [initialValues, setInitialValues] = useState({})
-  // const { data, error, isLoading } = useCafe(employeeId)
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setInitialValues(data)
-  //   }
-  // }, [data])
+  const { data, error, isLoading } = useEmployee(employeeId)
 
   const formFields = [
     {
@@ -49,24 +44,30 @@ function EditForm() {
   ]
 
   const handleFormSubmit = (data) => {
-    console.log("Data passed", data)
+    onFormSubmit(data)
   }
 
   const handleCancel = () => {
     router.history.back()
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  //       <Spin size='large' />
-  //     </div>
-  //   )
-  // }
+  useEffect(() => {
+    if (data) {
+      setInitialValues(data)
+    }
+  }, [data])
 
-  // if (error) {
-  //   return <Alert message="Error" description="Failed to load cafe data." type="error" showIcon />
-  // }
+  if (isLoading) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin size='large' />
+      </div>
+    )
+  }
+
+  if (error) {
+    return <Alert message="Error" description="Failed to load employee data." type="error" showIcon />
+  }
 
   return (
     <>

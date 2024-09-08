@@ -37,6 +37,22 @@ async function getService(cafe) {
   }
 }
 
+async function getEmployeeByIdService(id) {
+  const conn = await getConnection()
+  try {
+    const query = `SELECT * FROM employees WHERE id = ? LIMIT 1;`
+  
+    const sql = conn.format(query, [id])
+    logger.info("Executing query: " + sql)
+    return await conn.execute(sql)
+  } catch {
+    logger.error(`Database query failed: ${error.message}`)
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 async function createEmployeeService(payload) {
   if (!payload) {
     logger.error("createEmployeeService:: Payload is required")
@@ -190,6 +206,7 @@ function generateEmployeeId(size) {
 
 export {
   getService,
+  getEmployeeByIdService,
   createEmployeeService,
   upsertService,
   getEmployeeByName,

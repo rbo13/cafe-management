@@ -22,6 +22,17 @@ const searchEmployees = async (cafeName) => {
   return await response.json()
 }
 
+const fetchEmployeeById = async (id) => {
+  const GET_EMPLOYEE_BY_ID_URL = `${BASE_URL}/employees/${id}`
+  const response = await fetch(GET_EMPLOYEE_BY_ID_URL)
+  
+  if (!response.ok) {
+    throw new Error('Something went wrong')
+  }
+
+  return await response.json()
+}
+
 const addEmployee = async (employee) => {
   const ADD_EMPLOYEE_URL = `${BASE_URL}/employee`
   const options = {
@@ -40,8 +51,28 @@ const addEmployee = async (employee) => {
   }
 }
 
+const updateEmployee = async (newEmployee) => {
+  const UPDATE_EMPLOYEE_URL = `${BASE_URL}/employee`
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newEmployee)
+  }
+  
+  try {
+    const response = await fetch(UPDATE_EMPLOYEE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchEmployees,
   searchEmployees,
-  addEmployee
+  fetchEmployeeById,
+  addEmployee,
+  updateEmployee
 }

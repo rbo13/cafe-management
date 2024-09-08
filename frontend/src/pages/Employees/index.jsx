@@ -43,7 +43,7 @@ function Employees() {
   }
 
   const customGridOptions = {
-    paginationPageSize: 10
+    paginationPageSize: 15
   }
 
   return (

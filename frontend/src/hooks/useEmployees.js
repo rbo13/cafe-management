@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchEmployees, searchEmployees } from '../api/employee'
+import { fetchEmployeeById, fetchEmployees, searchEmployees } from '../api/employee'
 
 const useEmployees = (searchTerm) => {
   return useQuery({
@@ -17,6 +17,19 @@ const useEmployees = (searchTerm) => {
   })
 }
 
+const useEmployee = (employeeId) => {
+  return useQuery({
+    queryKey: ['employee', employeeId],
+    queryFn: () => {
+      return fetchEmployeeById(employeeId)
+    },
+    select: (data) => {
+      return data
+    }
+  })
+}
+
 export {
-  useEmployees
+  useEmployees,
+  useEmployee
 }
