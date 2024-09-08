@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import Form from '../Form'
 import { Alert, Spin } from 'antd'
-import { Route as EditCafeRoute } from '../../routes/cafes/$cafeId.edit'
-import { useCafe } from '../../hooks/useCafes'
 import { useRouter } from '@tanstack/react-router'
+import { Route as EditEmployeeRoute } from '../../routes/employees/$employeeId.edit'
 
-function EditForm({ onFormSubmit }) {
-  const { cafeId } = EditCafeRoute.useParams()
+function EditForm() {
+  const { employeeId } = EditEmployeeRoute.useParams()
   const router = useRouter()
 
   const [initialValues, setInitialValues] = useState({})
-  const { data, error, isLoading } = useCafe(cafeId)
+  // const { data, error, isLoading } = useCafe(employeeId)
 
-  useEffect(() => {
-    if (data) {
-      setInitialValues(data)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     setInitialValues(data)
+  //   }
+  // }, [data])
 
   const formFields = [
     {
@@ -36,8 +35,8 @@ function EditForm({ onFormSubmit }) {
       }
     },
     {
-      name: 'description',
-      label: 'Description',
+      name: 'email_address',
+      label: 'Email Address',
       type: 'textarea',
       rules: {
         maxLength: {
@@ -46,41 +45,33 @@ function EditForm({ onFormSubmit }) {
         }
       }
     },
-    { name: 'logo', label: 'Logo', type: 'file' },
-    {
-      name: 'location',
-      label: 'Location',
-      type: 'text',
-      rules: {
-        required: 'Location is required'
-      }
-    },
+    { name: 'phone_number', label: 'Logo', type: 'file' }
   ]
 
   const handleFormSubmit = (data) => {
-    onFormSubmit(data)
+    console.log("Data passed", data)
   }
 
   const handleCancel = () => {
     router.history.back()
   }
 
-  if (isLoading) {
-    return (
-      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Spin size='large' />
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  //       <Spin size='large' />
+  //     </div>
+  //   )
+  // }
 
-  if (error) {
-    return <Alert message="Error" description="Failed to load cafe data." type="error" showIcon />
-  }
+  // if (error) {
+  //   return <Alert message="Error" description="Failed to load cafe data." type="error" showIcon />
+  // }
 
   return (
     <>
       <Form
-        title='Edit cafe'
+        title='Edit Employee'
         fields={formFields}
         initialValues={initialValues}
         onSubmit={handleFormSubmit}

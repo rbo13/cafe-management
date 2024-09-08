@@ -33,8 +33,27 @@ const searchCafes = async (location) => {
   return await response.json()
 }
 
+const updateCafe = async (newCafe) => {
+  const UPDATE_CAFE_URL = `${BASE_URL}/cafe`
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newCafe)
+  }
+  
+  try {
+    const response = await fetch(UPDATE_CAFE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchCafes,
   searchCafes,
-  fetchCafeById
+  fetchCafeById,
+  updateCafe
 }
