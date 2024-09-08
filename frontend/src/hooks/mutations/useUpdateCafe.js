@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateCafe } from '../api/cafe'
+import { updateCafe } from '../../api/cafe'
 
 const useUpdateCafe = () => {
   const queryClient = useQueryClient()

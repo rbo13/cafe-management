@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Form from '../Form';
 
-function AddForm() {
+function AddForm({ onFormSubmit }) {
   const [initialValues, setInitialValues] = useState({})
 
   const formFields = [
@@ -44,7 +44,7 @@ function AddForm() {
   ]
 
   const handleFormSubmit = (data) => {
-    console.log("Data passed", data)
+    onFormSubmit(data)
   }
 
   const handleCancel = () => {
@@ -54,7 +54,7 @@ function AddForm() {
   return (
     <>
       <Form
-        title="Add new cafe"
+        title="Add New Cafe"
         fields={formFields}
         initialValues={initialValues}
         onSubmit={handleFormSubmit}

@@ -51,9 +51,28 @@ const updateCafe = async (newCafe) => {
   }
 }
 
+const addCafe = async (cafe) => {
+  const ADD_CAFE_URL = `${BASE_URL}/cafe`
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(cafe)
+  }
+  
+  try {
+    const response = await fetch(ADD_CAFE_URL, options)
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchCafes,
   searchCafes,
   fetchCafeById,
-  updateCafe
+  updateCafe,
+  addCafe
 }

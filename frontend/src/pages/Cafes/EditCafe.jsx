@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.css'
 import EditForm from '../../components/Cafe/EditForm'
-import { useUpdateCafe } from '../../hooks/useUpdateCafe'
+import { useUpdateCafe } from '../../hooks/mutations/useUpdateCafe'
 import { Alert } from 'antd'
 
 function EditCafe() {
@@ -11,10 +11,10 @@ function EditCafe() {
   const handleSubmit = (data) => {
     if (data) {
       mutation.mutate({
-        id: data?.id,
-        name: data?.name,
-        description: data?.description,
-        location: data?.location
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        location: data.location
       })
     }
   }

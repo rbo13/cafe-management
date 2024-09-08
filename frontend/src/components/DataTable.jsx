@@ -16,7 +16,7 @@ const DataTable = ({
 
   const defaultGridOptions = useMemo(() => ({
     pagination: true,
-    paginationPageSize: 10,
+    paginationPageSize: 15,
     paginationPageSizeSelector: [10, 15, 20, 25],
     domLayout: 'autoHeight',
     rowSelection: 'single',

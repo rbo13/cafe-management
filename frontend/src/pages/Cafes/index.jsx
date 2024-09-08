@@ -54,7 +54,7 @@ function Index() {
   }
 
   const customGridOptions = {
-    paginationPageSize: 10
+    paginationPageSize: 15
   }
 
   const handleSearch = useCallback((event) => {
