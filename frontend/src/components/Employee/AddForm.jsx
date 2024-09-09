@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Form from '../Form';
 import { useRouter } from '@tanstack/react-router';
+import { useCafes } from '../../hooks/useCafes';
 
 function AddForm({ onFormSubmit }) {
   const [initialValues, setInitialValues] = useState({})
   const router = useRouter()
+
+  const { data, error, isLoading } = useCafes()
   
   const formFields = [
     {
@@ -53,8 +56,8 @@ function AddForm({ onFormSubmit }) {
     },
     {
       name: 'cafe',
-      label: 'Cafe to be assigned',
-      type: 'text'
+      label: 'Assigned Cafe',
+      type: 'select'
     },
   ]
 
@@ -66,12 +69,22 @@ function AddForm({ onFormSubmit }) {
     router.history.back()
   }
 
+  const selectedOptions = useMemo(() => {
+    if (data) {
+      return data.map(cafe => ({
+        value: cafe?.name,
+        label: cafe?.name
+      }))
+    }
+  }, [data])
+
   return (
     <>
       <Form
         title="Add New Employee"
         fields={formFields}
         initialValues={initialValues}
+        selectOptions={selectedOptions}
         onSubmit={handleFormSubmit}
         onCancel={handleCancel}
       />

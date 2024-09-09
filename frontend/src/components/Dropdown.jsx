@@ -1,23 +1,19 @@
 import React from 'react'
-import { Select, Form as AntdForm } from 'antd'
-import { Controller } from 'react-hook-form'
+import { Select } from 'antd'
 
-const Dropdown = ({ label, name, options, control }) => (
-  <AntdForm.Item label={label} name={name}>
-    <Controller
-      name={name}
-      control={control}
-      render={({ field }) => (
-        <Select {...field}>
-          {options.map(option => (
-            <Select.Option key={option.value} value={option.value}>
-              {option.label}
-            </Select.Option>
-          ))}
-        </Select>
-      )}
-    />
-  </AntdForm.Item>
-);
+const { Option } = Select;
 
-export default Dropdown;
+const SelectDropdown = React.forwardRef(({ name, options, placeholder = "Select an option", ...rest }, ref) => {
+  return (
+    <Select ref={ref} placeholder={placeholder} {...rest}>
+      {options.map((option) => (
+        <Option key={option.id} value={option.value}>
+          {option.label}
+        </Option>
+      ))}
+    </Select>
+  );
+})
+
+
+export default SelectDropdown;

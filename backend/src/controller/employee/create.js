@@ -26,7 +26,7 @@ function createEmployee() {
       createdEmployee = await createEmployeeService(payload)
     
       if (cafe !== undefined) {
-        const [rows] = await getCafeByName(cafe?.name)
+        const [rows] = await getCafeByName(cafe)
         if (rows.length > 0) {
           createdCafe = rows[0]
         } else {
@@ -38,7 +38,7 @@ function createEmployee() {
 
         const employeeCafePayload = {
           employee_id: createdEmployee?.id,
-          cafe_id: createdCafe?.id ? createdCafe?.id : 0,
+          cafe_id: createdCafe?.id,
           start_date
         }
         await createEmployeeCafeService(employeeCafePayload)

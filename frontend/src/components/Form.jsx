@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space } from 'antd';
+import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
 import { useBlocker } from '@tanstack/react-router';
 import RadioButtonGroup from './RadioButtonGroup';
 
-const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
+const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCancel }) => {
   const { control, handleSubmit, formState: { isDirty, errors }, reset } = useForm({
     defaultValues: initialValues,
   })
@@ -49,8 +49,6 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
     })
   }
 
-
-
   return (
     <Card>
       <Typography.Title level={4}>{title}</Typography.Title>
@@ -72,11 +70,19 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
                 } else if (field.type === 'radio') {
                   return (
                     <RadioButtonGroup
-                      control={control}
                       options={genderOptions}
                       {...controllerField}
                     />
                   )
+                } else if (field.type === 'select') {
+                  return (
+                    <Select
+                      placeholder='Select cafe to assign'
+                      style={{ width: 180 }}
+                      options={selectOptions}
+                      {...controllerField}
+                    />
+                  );
                 } else if (field.type === 'file') {
                   return (
                     <Upload

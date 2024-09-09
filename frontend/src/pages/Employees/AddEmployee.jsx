@@ -14,6 +14,7 @@ function AddEmployee() {
         employee_name: data.employee_name,
         email_address: data.email_address,
         phone_number: data.phone_number,
+        cafe: data.cafe,
         gender: data.gender
       })
     }
