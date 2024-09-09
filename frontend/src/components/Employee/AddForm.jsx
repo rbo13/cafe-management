@@ -46,7 +46,7 @@ function AddForm({ onFormSubmit }) {
     {
       name: 'gender',
       label: 'Gender',
-      type: 'text',
+      type: 'radio',
       rules: {
         required: 'Gender is required'
       }

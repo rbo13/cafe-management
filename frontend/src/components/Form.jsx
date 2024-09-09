@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
 import { useBlocker } from '@tanstack/react-router';
+import RadioButtonGroup from './RadioButtonGroup';
 
 const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
   const { control, handleSubmit, formState: { isDirty, errors }, reset } = useForm({
@@ -10,6 +11,11 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
   })
 
   const [fileList, setFileList] = useState([]);
+
+  const genderOptions = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+  ]
 
   useBlocker({
     blockerFn: () => window.confirm('You have unsaved changes, are you sure you want to leave?'),
@@ -43,6 +49,8 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
     })
   }
 
+
+
   return (
     <Card>
       <Typography.Title level={4}>{title}</Typography.Title>
@@ -60,7 +68,15 @@ const Form = ({ title, fields, initialValues, onSubmit, onCancel }) => {
               rules={field.rules}
               render={({ field: controllerField }) => {
                 if (field.type === 'textarea') {
-                  return <Input.TextArea {...controllerField} />;
+                  return <Input.TextArea {...controllerField} />
+                } else if (field.type === 'radio') {
+                  return (
+                    <RadioButtonGroup
+                      control={control}
+                      options={genderOptions}
+                      {...controllerField}
+                    />
+                  )
                 } else if (field.type === 'file') {
                   return (
                     <Upload

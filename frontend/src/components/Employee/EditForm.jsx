@@ -40,7 +40,7 @@ function EditForm({ onFormSubmit }) {
         }
       }
     },
-    { name: 'phone_number', label: 'Logo', type: 'file' }
+    { name: 'phone_number', label: 'Phone Number', type: 'text' }
   ]
 
   const handleFormSubmit = (data) => {
