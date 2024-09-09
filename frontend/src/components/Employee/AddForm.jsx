@@ -35,6 +35,10 @@ function AddForm({ onFormSubmit }) {
         maxLength: {
           value: 256,
           message: 'Maximum length is 256'
+        },
+        pattern: {
+          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+          message: 'Invalid email address'
         }
       }
     },
@@ -43,7 +47,11 @@ function AddForm({ onFormSubmit }) {
       label: 'Phone Number',
       type: 'text',
       rules: {
-        required: 'Phone number is required'
+        required: 'Phone number is required',
+        pattern: {
+          value: /^[89]\d{7}$/,
+          message: 'Invalid Singapore phone number'
+        }
       }
     },
     {
