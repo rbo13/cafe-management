@@ -8,7 +8,11 @@ function uploadFile() {
 
   const storage = multer.memoryStorage()
   const upload = multer({
-    storage: storage
+    storage: storage,
+    limits: {
+      // set limit to 2mb
+      fileSize: 2 * 1024 * 1024
+    }
   })
 
   router.post('', upload.single('logo'), handleUpload())
