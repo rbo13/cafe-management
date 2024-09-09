@@ -45,13 +45,6 @@ function Index() {
   }
 
   const columnDefs = [
-    {
-      headerName: 'Logo',
-      field: 'logo',
-      cellRenderer: LogoCellRenderer,
-      sortable: false,
-      filter: false
-    },
     { headerName: 'Name', field: 'name', sortable: true, filter: true },
     { headerName: 'Description', field: 'description', sortable: true, filter: true },
     {
