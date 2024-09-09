@@ -7,7 +7,7 @@ const useUpdateEmployee = () => {
   return useMutation({
     mutationFn: updateEmployee,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['employee'] })
+      queryClient.invalidateQueries({ queryKey: ['employee', 'employees'] })
     },
     onError: (error) => {
       console.error('Error updating employee:', error.message)

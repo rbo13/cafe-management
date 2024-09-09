@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Form from '../Form'
 import { Alert, Spin } from 'antd'
 import { useRouter } from '@tanstack/react-router'
 import { Route as EditEmployeeRoute } from '../../routes/employees/$employeeId.edit'
 import { useEmployee } from '../../hooks/useEmployees'
+import { useCafes } from '../../hooks/useCafes'
 
 function EditForm({ onFormSubmit }) {
   const { employeeId } = EditEmployeeRoute.useParams()
@@ -11,6 +12,7 @@ function EditForm({ onFormSubmit }) {
 
   const [initialValues, setInitialValues] = useState({})
   const { data, error, isLoading } = useEmployee(employeeId)
+  const { data: dataCafe } = useCafes()
 
   const formFields = [
     {
@@ -40,7 +42,12 @@ function EditForm({ onFormSubmit }) {
         }
       }
     },
-    { name: 'phone_number', label: 'Phone Number', type: 'text' }
+    { name: 'phone_number', label: 'Phone Number', type: 'text' },
+    {
+      name: 'cafe',
+      label: 'Assigned Cafe',
+      type: 'select'
+    }
   ]
 
   const handleFormSubmit = (data) => {
@@ -51,9 +58,21 @@ function EditForm({ onFormSubmit }) {
     router.history.back()
   }
 
+  const selectedOptions = useMemo(() => {
+    if (dataCafe) {
+      return dataCafe.map(cafe => ({
+        value: cafe?.name,
+        label: cafe?.name
+      }))
+    }
+  }, [dataCafe])
+
   useEffect(() => {
     if (data) {
-      setInitialValues(data)
+      setInitialValues({
+        ...data,
+        cafe: data.cafe_name
+      })
     }
   }, [data])
 
@@ -75,6 +94,7 @@ function EditForm({ onFormSubmit }) {
         title='Edit Employee'
         fields={formFields}
         initialValues={initialValues}
+        selectOptions={selectedOptions}
         onSubmit={handleFormSubmit}
         onCancel={handleCancel}
       />

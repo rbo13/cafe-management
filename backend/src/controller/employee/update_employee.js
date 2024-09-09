@@ -38,7 +38,7 @@ function updateEmployee() {
       // change the cafe where
       // the current employee works
       if (cafe !== undefined) {
-        const [currentCafe] = await getCafeByName(cafe?.name)
+        const [currentCafe] = await getCafeByName(cafe)
         if (currentCafe?.length > 0) {
           await employeeCafeUpsertService({
             employee_id: currentEmployee?.id,

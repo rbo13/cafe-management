@@ -14,7 +14,8 @@ function EditEmployee() {
         id: data.id,
         name: data.name,
         email_address: data.email_address,
-        phone_number: data.phone_number
+        phone_number: data.phone_number,
+        cafe: data.cafe
       })
     }
   }

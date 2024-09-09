@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
@@ -10,7 +10,7 @@ const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCan
     defaultValues: initialValues,
   })
 
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState([])
 
   const genderOptions = [
     { label: 'Male', value: 'Male' },
@@ -81,6 +81,9 @@ const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCan
                       style={{ width: 180 }}
                       options={selectOptions}
                       {...controllerField}
+                      onChange={(value) => {
+                        controllerField.onChange(value)
+                      }}
                     />
                   );
                 } else if (field.type === 'file') {

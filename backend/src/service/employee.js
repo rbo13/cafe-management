@@ -40,8 +40,23 @@ async function getService(cafe) {
 async function getEmployeeByIdService(id) {
   const conn = await getConnection()
   try {
-    const query = `SELECT * FROM employees WHERE id = ? LIMIT 1;`
-  
+    const query = `
+      SELECT 
+        e.*,
+        c.name AS cafe_name,
+        c.description AS cafe_description,
+        c.logo AS cafe_logo,
+        c.location AS cafe_location
+      FROM
+        employees e
+      JOIN
+        employee_cafes ec ON e.id = ec.employee_id
+      JOIN
+        cafes c ON ec.cafe_id = c.id
+      WHERE
+        e.id = ?
+      LIMIT 1;
+    `
     const sql = conn.format(query, [id])
     logger.info("Executing query: " + sql)
     return await conn.execute(sql)
@@ -74,7 +89,6 @@ async function createEmployeeService(payload) {
     INSERT INTO employees (id, name, email_address, phone_number, gender)
     VALUES (?, ?, ?, ?, ?);
   `
-
   const returningQuery = `SELECT * FROM employees WHERE id = ? LIMIT 1;`
 
   try {
