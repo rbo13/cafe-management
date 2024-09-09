@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS cafes (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(100) NOT NULL UNIQUE,
   description TEXT,
-  logo BLOB,
+  logo MEDIUMBLOB,
   location VARCHAR(255) NOT NULL,
   INDEX idx_cafe_location (location),
   INDEX idx_cafe_name (name)

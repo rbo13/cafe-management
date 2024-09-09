@@ -85,6 +85,27 @@ async function getCafeByIdService(id) {
   }
 }
 
+async function uploadLogoService(payload) {
+  const {
+    cafeId,
+    logo
+  } = payload
+
+  const conn = await getConnection()
+  const query = `UPDATE cafes SET logo = ? WHERE id = ? LIMIT 1;`
+  try {
+    const sql = conn.format(query, [logo, cafeId])
+    await conn.beginTransaction()
+    await conn.execute(sql)
+    await conn.commit()
+  } catch (error) {
+    await conn.rollback()
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 async function upsertService(payload) {
   if (!payload) {
     logger.error("upsertService:: Payload is required")
@@ -157,4 +178,5 @@ export {
   getCafeByIdService,
   upsertService,
   deleteCafeService,
+  uploadLogoService
 }
