@@ -9,7 +9,7 @@ volumes:
 
 services:
   db:
-    image: 'mysql'
+    image: 'mysql:8.1'
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=cafe
@@ -24,7 +24,7 @@ services:
       - app_network
   flyway:
     image: flyway/flyway
-    command: -url=jdbc:mysql://db?allowPublicKeyRetrieval=true -schemas=cafe -user=root -password=password -connectRetries=60 migrate
+    command: -url=jdbc:mysql://db?allowPublicKeyRetrieval=true -schemas=cafe -user=root -password=password -connectRetries=60 -cleanDisabled=false clean migrate
     volumes:
       - ./flyway/sql:/flyway/sql
     depends_on:

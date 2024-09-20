@@ -10,7 +10,6 @@ INSERT INTO employees (id, name, email_address, phone_number, gender)
       ('UIAA450000', 'Sheldon Cooper', 'sheldoncooper@example.com', '81234912', 'Male'),
       ('UIAA210000', 'Penny', 'penny@example.com', '81234991', 'Female'),
       ('UIAA000001', ' Leonard Hofstadter', 'lenny@example.com', '81234881', 'Male');
-      
 
 INSERT INTO cafes (id, name, description, location)
     VALUES

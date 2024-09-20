@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import Index from './pages/Cafes/Index.jsx'
+import Index from './pages/Cafes/index'
 import './index.css'
 
 import { routeTree } from './routeTree.gen.ts'
