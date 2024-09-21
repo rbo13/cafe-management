@@ -92,7 +92,26 @@ async function createEmployeeCafeService(payload) {
   }
 }
 
+async function getCafeEmployeeService({ employeeId, cafeId }) {
+  const conn = await getConnection()
+
+  const query = `
+    SELECT * FROM employee_cafes WHERE employee_id = ? AND cafe_id = ? LIMIT 1;
+  `
+
+  try {
+    const sql = conn.format(query, [employeeId, cafeId])
+    logger.info('Executing query: ', sql)
+    return await conn.execute(sql)
+  } catch (error) {
+    throw error
+  } finally {
+    conn.release()
+  }
+}
+
 export {
   upsertService,
-  createEmployeeCafeService
+  createEmployeeCafeService,
+  getCafeEmployeeService
 }

@@ -2,14 +2,14 @@ USE cafe;
 
 INSERT INTO employees (id, name, email_address, phone_number, gender)
     VALUES
-      ('UIAA000000', 'John Doe', 'johndoe@example.com', '91234567', 'Male'),
-      ('UIAA110000', 'Jane Smith', 'janesmith@example.com', '81234567', 'Female'),
-      ('UIAA220000', 'Bito Burk', 'bitoburk@example.com', '81234588', 'Male'),
-      ('UIAA330000', 'Sam Choi', 'bhardychoi@example.com', '81234599', 'Female'),
-      ('UIAA440000', 'Richard Burk', 'richardburk@example.com', '81234218', 'Male'),
-      ('UIAA450000', 'Sheldon Cooper', 'sheldoncooper@example.com', '81234912', 'Male'),
+      ('UIAA000000', 'John', 'johndoe@example.com', '91234567', 'Male'),
+      ('UIAA110000', 'Jane', 'janesmith@example.com', '81234567', 'Female'),
+      ('UIAA220000', 'Bito', 'bitoburk@example.com', '81234588', 'Male'),
+      ('UIAA330000', 'Sam', 'bhardychoi@example.com', '81234599', 'Female'),
+      ('UIAA440000', 'Richard', 'richardburk@example.com', '81234218', 'Male'),
+      ('UIAA450000', 'Sheldon', 'sheldoncooper@example.com', '81234912', 'Male'),
       ('UIAA210000', 'Penny', 'penny@example.com', '81234991', 'Female'),
-      ('UIAA000001', ' Leonard Hofstadter', 'lenny@example.com', '81234881', 'Male');
+      ('UIAA000001', ' Leonard', 'lenny@example.com', '81234881', 'Male');
 
 INSERT INTO cafes (id, name, description, location)
     VALUES
@@ -20,7 +20,7 @@ INSERT INTO cafes (id, name, description, location)
       ('44444444-6666-2222-8888-222222222222', 'CBTL', '', '382 Java Ave'),
       ('33333333-1111-3333-5555-444444444444', 'Tofee Lux', '', '382 Java Ave'),
       ('22222222-5555-1111-7777-333333333333', 'StarBuks', 'Because why not?', '382 Java Ave'),
-      ('55555555-6666-8888-7777-111111111111', 'Dr. Drip', 'Get your daily caffeine drip.', '382 Java Ave');
+      ('55555555-6666-8888-7777-111111111111', 'Max Drip', 'Get your daily caffeine drip.', '382 Java Ave');
 
 INSERT INTO employee_cafes (employee_id, cafe_id, start_date)
     VALUES

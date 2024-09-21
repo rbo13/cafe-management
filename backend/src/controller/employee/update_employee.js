@@ -1,6 +1,6 @@
 import { getCafeByName } from "../../service/cafe";
 import { upsertService as employeeUpsertService, getEmployeeById } from "../../service/employee"
-import { upsertService as employeeCafeUpsertService } from "../../service/employee_cafe";
+import { upsertService as employeeCafeUpsertService, getCafeEmployeeService } from "../../service/employee_cafe";
 
 function updateEmployee() {
   return async (req, res) => {
@@ -39,7 +39,17 @@ function updateEmployee() {
       // the current employee works
       if (cafe !== undefined) {
         const [currentCafe] = await getCafeByName(cafe)
-        if (currentCafe?.length > 0) {
+        const [currentEmployeeCafe] = await getCafeEmployeeService({
+          employeeId: currentEmployee?.id,
+          cafeId: currentCafe[0]?.id
+        })
+
+        if (currentEmployeeCafe?.length > 0) {
+          const employeeCafe = currentEmployeeCafe[0]
+          await employeeCafeUpsertService({
+            ...employeeCafe
+          })
+        } else {
           await employeeCafeUpsertService({
             employee_id: currentEmployee?.id,
             cafe_id: currentCafe[0]?.id

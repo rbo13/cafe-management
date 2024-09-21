@@ -16,6 +16,4 @@ function employeeRoutes() {
   return router
 }
 
-
-
 export { employeeRoutes }
