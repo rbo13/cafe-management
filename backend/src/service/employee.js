@@ -49,9 +49,9 @@ async function getEmployeeByIdService(id) {
         c.location AS cafe_location
       FROM
         employees e
-      JOIN
+      LEFT JOIN
         employee_cafes ec ON e.id = ec.employee_id
-      JOIN
+      LEFT JOIN
         cafes c ON ec.cafe_id = c.id
       WHERE
         e.id = ?
