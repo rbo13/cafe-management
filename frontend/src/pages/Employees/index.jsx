@@ -88,7 +88,7 @@ function Employees() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="DELETE"
+        okText="Delete"
         okButtonProps={{ danger: true }}
       >
         <p>Are you sure you want to delete this employee?</p>

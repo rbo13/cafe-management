@@ -50,7 +50,8 @@ function Index() {
       field: 'logo',
       cellRenderer: LogoCellRenderer,
       cellClass: 'valign-center',
-      minWidth: 100,
+      width: 100,
+      autoHeight: true,
       sortable: false,
       filter: false
     },
@@ -97,8 +98,7 @@ function Index() {
   ]
 
   const customGridOptions = {
-    paginationPageSize: 15,
-    rowHeight: 124
+    paginationPageSize: 15
   }
 
   const handleSearch = useCallback((event) => {
@@ -145,7 +145,7 @@ function Index() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="DELETE"
+        okText="Delete"
         okButtonProps={{ danger: true }}
       >
         <p>Are you sure you want to delete this cafe?</p>

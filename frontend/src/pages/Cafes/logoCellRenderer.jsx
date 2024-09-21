@@ -2,7 +2,7 @@ import React from 'react'
 import { useCafeLogo } from '../../hooks/useCafes';
 
 export default (params) => {
-  const { data, fetchLogo } = params
+  const { data } = params
 
   const { data: logo, isLoading } = useCafeLogo(data?.id)
 
@@ -10,12 +10,14 @@ export default (params) => {
 
   return (
     <span className="imgSpanLogo">
-      {logo && (
+      {logo ? (
         <img
           alt={`${data?.name} Logo`}
           src={`data:image/jpeg;base64,${logo}`}
           className="logo"
         />
+      ) : (
+        <span>No Logo Uploaded</span>
       )}
     </span>
   )

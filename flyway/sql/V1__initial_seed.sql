@@ -17,7 +17,7 @@ INSERT INTO cafes (id, name, description, location)
       ('66666666-7777-8888-9999-000000000000', 'Beanery', 'An artisanal coffee shop with a variety of beans.', '456 Oak Ave'),
       ('77777777-4444-7777-6666-010101010101', 'Homebrew', 'Local brew.', '456 Oak Ave'),
       ('55555555-6666-9999-7777-111111111111', 'Mochachino', '', '382 Java Ave'),
-      ('44444444-6666-2222-8888-222222222222', 'CBTL', '', '382 Java Ave'),
+      ('44444444-6666-2222-8888-222222222222', 'CBTLERS', '', '382 Java Ave'),
       ('33333333-1111-3333-5555-444444444444', 'Tofee Lux', '', '382 Java Ave'),
       ('22222222-5555-1111-7777-333333333333', 'StarBuks', 'Because why not?', '382 Java Ave'),
       ('55555555-6666-8888-7777-111111111111', 'Max Drip', 'Get your daily caffeine drip.', '382 Java Ave');

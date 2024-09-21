@@ -26,7 +26,6 @@ const DataTable = ({
   }), [])
 
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), [])
-  const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), [])
 
   const defaultColDef = useMemo(() => {
     return {
@@ -44,22 +43,17 @@ const DataTable = ({
   if (error) return <p>Error: {error.message}</p>
 
   return (
-    <div style={containerStyle}>
-      <div
-        style={gridStyle}
-        className="ag-theme-quartz"
+    <div className="ag-theme-quartz" style={containerStyle}>
+      <AgGridReact
+        ref={gridRef}
+        rowData={data}
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        onCellClicked={onCellClicked}
+        onRowSelected={onRowSelected}
+        {...mergedGridOptions}
       >
-        <AgGridReact
-          ref={gridRef}
-          rowData={data}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          onCellClicked={onCellClicked}
-          onRowSelected={onRowSelected}
-          {...mergedGridOptions}
-        >
-        </AgGridReact>
-      </div>
+      </AgGridReact>
     </div>
   )
 }

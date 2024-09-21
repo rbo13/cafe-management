@@ -21,9 +21,8 @@
 
 .logo {
   display: block;
-  width: 90px;
-  height: auto;
-  max-height: 100%;
+  width: auto;
+  height: 64px;
   margin-right: 12px;
   filter: brightness(1.1);
 }
