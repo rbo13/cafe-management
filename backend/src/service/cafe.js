@@ -1,5 +1,4 @@
 import logger from 'loglevel'
-import { randomUUID } from "node:crypto"
 import { getConnection } from '../database'
 
 async function getCafeService(location) {
@@ -88,13 +87,21 @@ async function getCafeByIdService(id) {
 async function uploadLogoService(payload) {
   const {
     cafeId,
+    mimetype,
     logo
   } = payload
 
   const conn = await getConnection()
-  const query = `UPDATE cafes SET logo = ? WHERE id = ? LIMIT 1;`
+  const query = `UPDATE cafes
+    SET
+      logo = ?,
+      mimetype = ?
+    WHERE
+      id = ? LIMIT 1;
+  `
+
   try {
-    const sql = conn.format(query, [logo, cafeId])
+    const sql = conn.format(query, [logo, mimetype, cafeId])
     await conn.beginTransaction()
     await conn.execute(sql)
     await conn.commit()
@@ -112,32 +119,31 @@ async function upsertService(payload) {
     return
   }
 
-  if (payload.id === undefined) {
-    payload.id = randomUUID()
-  }
-
   const conn = await getConnection()
 
   const {
     id,
     name,
     description,
+    logo,
+    mimetype,
     location
   } = payload
 
   const query = `
-    INSERT INTO cafes (id, name, description, location)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO cafes (id, name, description, logo, mimetype, location)
+    VALUES (?, ?, ?, ?, ?, ?)
     ON DUPLICATE KEY UPDATE
       name = VALUES(name),
-      location = VALUES(location),
-      description = VALUES(description);
+      description = VALUES(description),
+      logo = VALUES(logo),
+      mimetype = VALUES(mimetype),
+      location = VALUES(location);
   `
-
   const returningQuery = `SELECT * FROM cafes WHERE id = ? LIMIT 1;`
 
   try {
-    const sql = conn.format(query, [id, name, description, location])
+    const sql = conn.format(query, [id, name, description, logo, mimetype, location])
     await conn.beginTransaction()
     await conn.execute(sql)
     const [rows] = await conn.execute(returningQuery, [id])

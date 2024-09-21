@@ -36,7 +36,31 @@ function getCafeById() {
   }
 }
 
+function getCafeLogo() {
+  return async (req, res) => {
+    const cafeId = req.params.id
+
+    try {
+      const [rows] = await getCafeByIdService(cafeId)
+      if (rows.length > 0) {
+        const cafe = rows[0]
+        // we set default to image/jpeg
+        let mimetype = 'image/jpeg'
+        if (cafe?.mimetype !== null) {
+          mimetype = cafe.mimetype
+        }
+        return res.set('Content-Type', mimetype).send(cafe.logo)
+      }
+      return res.status(404).json({ message: 'Cafe not found' })
+    } catch (error) {
+      logger.error(`Error fetching cafes: ${error.message}`)
+      res.status(500).json({ message: 'Database query failed', error: error.message })
+    }
+  }
+}
+
 export {
   getCafe,
-  getCafeById
+  getCafeById,
+  getCafeLogo
 }

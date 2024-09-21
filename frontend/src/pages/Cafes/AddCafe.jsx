@@ -12,11 +12,13 @@ function AddCafe() {
 
   const handleSubmit = (data) => {
     if (data) {
-      mutation.mutate({
-        name: data.name,
-        description: data.description,
-        location: data.location
-      })
+      const formData = new FormData()
+      formData.append('name', data.name)
+      formData.append('description', data.description)
+      formData.append('location', data.location)
+      formData.append('logo', data.logo);
+
+      mutation.mutate(formData)
       setName(data.name)
     }
   }

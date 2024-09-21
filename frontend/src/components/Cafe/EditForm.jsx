@@ -46,7 +46,11 @@ function EditForm({ onFormSubmit }) {
         }
       }
     },
-    { name: 'logo', label: 'Logo', type: 'file' },
+    {
+      name: 'logo',
+      label: 'Logo',
+      type: 'file'
+    },
     {
       name: 'location',
       label: 'Location',

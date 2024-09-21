@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space, Select } from 'antd';
+import { Input, Button, Upload, Form as AntdForm, Card, Typography, Space, Select, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons'
 import { useBlocker } from '@tanstack/react-router';
 import RadioButtonGroup from './RadioButtonGroup';
 
 const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCancel }) => {
-  const { control, handleSubmit, formState: { isDirty, errors }, reset } = useForm({
+  const { control, handleSubmit, formState: { isDirty, errors, isValid }, reset } = useForm({
     defaultValues: initialValues,
+    mode: 'onChange'
   })
 
   const [fileList, setFileList] = useState([])
+  const [isFileValid, setIsFileValid] = useState(true) // since file is optional, we set it to be valid.
 
   const genderOptions = [
     { label: 'Male', value: 'Male' },
@@ -26,17 +28,48 @@ const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCan
     reset(initialValues)
   }, [initialValues, reset])
 
-  const handleBeforeUpload = (file) => {
-    // prevent automatic upload
+  const handleBeforeUpload = useCallback((fileList) => {
+    if (fileList?.length <= 0) {
+      return false
+    }
+
+    const file = fileList[0]
+    const maxSize = 2 * 1024 * 1024
+    const validTypes = ['image/jpeg', 'image/png']
+
+    if (!validTypes.includes(file.type)) {
+      message.error('Invalid file type. Only JPEG and PNG are allowed.')
+      setIsFileValid(false)
+      return false
+    }
+
+    if (file.size > maxSize) {
+      message.error('File size exceeds 2MB.')
+      setIsFileValid(false)
+      return false
+    }
+
+    // this prevents automatic upload
+    // when a file has been selected
+    setIsFileValid(true)
     return false
+  }, [fileList, setIsFileValid])
+
+  const handleFileChange = ({ fileList }) => {
+    handleBeforeUpload(fileList)
+
+    setFileList(fileList)
   }
 
-  const handleFileChange = ({ fileList }) => setFileList(fileList)
-
   const handleFormSubmit = (data) => {
+    let file = null;
+    if (fileList?.length > 0) {
+      file = fileList[0].originFileObj
+    }
+
     onSubmit({
       ...data,
-      logo: fileList,
+      logo: file
     })
 
     reset({
@@ -108,7 +141,13 @@ const Form = ({ title, selectOptions = [],fields, initialValues, onSubmit, onCan
         ))}
         <AntdForm.Item>
           <Space>
-            <Button type="primary" htmlType="submit">Submit</Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={!isValid || !isFileValid}
+            >
+              Submit
+            </Button>
             <Button type="default" onClick={onCancel}>Cancel</Button>
           </Space>
         </AntdForm.Item>

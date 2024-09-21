@@ -49,22 +49,44 @@ function Index() {
       headerName: 'Logo',
       field: 'logo',
       cellRenderer: LogoCellRenderer,
+      cellClass: 'valign-center',
+      minWidth: 100,
       sortable: false,
       filter: false
     },
-    { headerName: 'Name', field: 'name', sortable: true, filter: true },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true },
+    {
+      headerName: 'Name',
+      field: 'name',
+      sortable: true,
+      filter: true,
+      cellClass: 'valign-center'
+    },
+    {
+      headerName: 'Description',
+      field: 'description',
+      sortable: true,
+      filter: true,
+      cellClass: 'valign-center'
+    },
     {
       headerName: 'Employees',
       field: 'employees',
       cellRenderer: EmployeesLinkRenderer,
+      cellClass: 'valign-center',
       sortable: true,
       filter: true
     },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true },
+    {
+      headerName: 'Location',
+      field: 'location',
+      cellClass: 'valign-center',
+      sortable: true,
+      filter: true
+    },
     {
       headerName: 'Action',
       field: 'action',
+      cellClass: 'valign-center',
       cellRenderer: ActionRenderer,
       cellRendererParams: {
         onShowModal: showModal
@@ -75,7 +97,8 @@ function Index() {
   ]
 
   const customGridOptions = {
-    paginationPageSize: 15
+    paginationPageSize: 15,
+    rowHeight: 124
   }
 
   const handleSearch = useCallback((event) => {

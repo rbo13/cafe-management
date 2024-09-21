@@ -14,13 +14,13 @@ INSERT INTO employees (id, name, email_address, phone_number, gender)
 INSERT INTO cafes (id, name, description, location)
     VALUES
       ('11111111-2222-3333-4444-555555555555', 'Cafe Mocha', 'A cozy cafe serving the best mocha in town.', '123 Main St'),
-      ('66666666-7777-8888-9999-000000000000', 'The Beanery', 'An artisanal coffee shop with a variety of beans.', '456 Oak Ave'),
-      ('77777777-4444-7777-6666-010101010101', 'The Homebrew', 'Local brew.', '456 Oak Ave'),
+      ('66666666-7777-8888-9999-000000000000', 'Beanery', 'An artisanal coffee shop with a variety of beans.', '456 Oak Ave'),
+      ('77777777-4444-7777-6666-010101010101', 'Homebrew', 'Local brew.', '456 Oak Ave'),
       ('55555555-6666-9999-7777-111111111111', 'Mochachino', '', '382 Java Ave'),
-      ('44444444-6666-2222-8888-222222222222', 'See Bee Tee El', '', '382 Java Ave'),
-      ('33333333-1111-3333-5555-444444444444', 'Tightrope Coffee', '', '382 Java Ave'),
+      ('44444444-6666-2222-8888-222222222222', 'CBTL', '', '382 Java Ave'),
+      ('33333333-1111-3333-5555-444444444444', 'Tofee Lux', '', '382 Java Ave'),
       ('22222222-5555-1111-7777-333333333333', 'StarBuks', 'Because why not?', '382 Java Ave'),
-      ('55555555-6666-8888-7777-111111111111', 'Morning Drip', 'Get your daily caffeine drip.', '382 Java Ave');
+      ('55555555-6666-8888-7777-111111111111', 'Dr. Drip', 'Get your daily caffeine drip.', '382 Java Ave');
 
 INSERT INTO employee_cafes (employee_id, cafe_id, start_date)
     VALUES

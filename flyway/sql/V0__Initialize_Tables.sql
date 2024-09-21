@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS cafes (
   name VARCHAR(100) NOT NULL UNIQUE,
   description TEXT,
   logo MEDIUMBLOB,
+  mimetype TEXT,
   location VARCHAR(255) NOT NULL,
   INDEX idx_cafe_location (location),
   INDEX idx_cafe_name (name)
