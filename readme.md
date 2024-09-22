@@ -40,6 +40,8 @@ cafe-management
 
 - **flyway**
   - Holds database migration scripts managed by Flyway. These scripts are responsible for versioning and managing changes in the database schema, typically written in SQL. We just change the content of this directory if we update something in our database.
+    - **V0__Initialize_Tables.sql** - Defines the database tables and schema.
+    - **V1__initial_seed.sql** - Database seeder files.
 
 - **frontend**
   - Contains the client-side application code, this is where our UI lives. This is using React with Vite.
